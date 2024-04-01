@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/api-collect/guanyi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/guanyi/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/hive/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/hive/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/kingdee/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/kingdee/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/mail/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/mail/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/spark/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/spark/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/stock/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-collect/stock/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hive" />
+        <module name="guanyi" />
+        <module name="kingdee" />
+        <module name="stock" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-collect" target="1.8" />
+      <module name="guanyi" target="1.8" />
+      <module name="hive" target="1.8" />
+      <module name="kingdee" target="1.8" />
+      <module name="mail" target="1.8" />
+      <module name="spark" target="1.8" />
+      <module name="stock" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

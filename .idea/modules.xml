@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/api-collect/api-collect.iml" filepath="$PROJECT_DIR$/api-collect/api-collect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api-collect/guanyi/guanyi.iml" filepath="$PROJECT_DIR$/api-collect/guanyi/guanyi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api-collect/hive/hive.iml" filepath="$PROJECT_DIR$/api-collect/hive/hive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api-collect/kingdee/kingdee.iml" filepath="$PROJECT_DIR$/api-collect/kingdee/kingdee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stock.iml" filepath="$PROJECT_DIR$/stock.iml" />
+    </modules>
+  </component>
+</project>
