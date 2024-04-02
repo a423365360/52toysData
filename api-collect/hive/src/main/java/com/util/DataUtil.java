@@ -167,6 +167,7 @@ public class DataUtil {
         rowField.createCell(25).setCellValue("业务线判断来源");
         rowField.createCell(26).setCellValue("数据类型");
         rowField.createCell(27).setCellValue("结算组织");
+        rowField.createCell(28).setCellValue("售价");
 
         int rowNumber = 1;
         SXSSFRow row;
@@ -205,6 +206,7 @@ public class DataUtil {
             row.createCell(25).setCellValue(resultSet.getString("judge_source"));
             row.createCell(26).setCellValue(resultSet.getString("data_type"));
             row.createCell(27).setCellValue(resultSet.getString("report_range"));
+            row.createCell(28).setCellValue(resultSet.getDouble("material_price"));
             rowNumber++;
         }
 
