@@ -469,4 +469,42 @@ public class DataUtil {
         xssfWorkbook.close();
         return new ReportBean(path, sign, endDayInput);
     }
+
+
+    public static ReportBean getWeekReport(Connection hiveConnection, String endDayInput, String testFlag, int sign) throws Exception {
+        SXSSFWorkbook xssfWorkbook = new SXSSFWorkbook(1000);
+
+        String endDay = endDayInput;
+        // 查询分区
+        DateTime yesterday = DateTime.of(endDay, "yyyy-MM-dd").offset(DateField.HOUR, -24 * 1);
+        String dt = yesterday.toString("yyyy-MM-dd");
+        String month = yesterday.toString("yyyy-MM");
+        String year = yesterday.toString("yyyy");
+
+        String path = "/datadisk/javalog/dws/WeekReport_" + endDay + "_" + sign + DateTime.now().getTime() + ".xlsx";
+        if ("0".equals(testFlag)) {
+            path = "D:\\test\\WeekReport_" + endDay + "_" + sign + DateTime.now().getTime() + ".xlsx";
+        }
+
+        // 业务线达成
+        String businessLineInReachSql = "SELECT * FROM "
+                + "ads_business_line_reach_month WHERE dt = '" + month + "' AND id < 100";
+        String businessLineInReachTotalSql = "SELECT * FROM "
+                + "ads_business_line_reach_month_total WHERE dt = '" + month + "'";
+        AdsBusinessReach adsBusinessReach = new AdsBusinessReach(xssfWorkbook, hiveConnection);
+        adsBusinessReach.setSheet("业务线达成-月", businessLineInReachSql, businessLineInReachTotalSql, dt);
+
+        // 年度达成
+        String businessLineInReachYearSql = "SELECT * FROM "
+                + "ads_business_line_reach_year WHERE dt = '" + year + "' AND id < 100";
+        AdsBusinessReachYear adsBusinessReachYear = new AdsBusinessReachYear(xssfWorkbook, hiveConnection);
+        adsBusinessReachYear.setSheet("业务线达成-年", businessLineInReachYearSql, dt);
+
+        FileOutputStream fileOutputStream = new FileOutputStream(path);
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+        xssfWorkbook.write(bufferedOutputStream);
+        bufferedOutputStream.close();
+        fileOutputStream.close();
+        return new ReportBean(path, sign, endDayInput);
+    }
 }

@@ -67,21 +67,25 @@ public class MailUtil {
             }
             if (ReportType.GUANYI == file.getReportType()) {
                 String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
-                fileName = "管易营业数据(新品|对标产品|自研)-" + dateString + ".xlsx";
+                fileName = "管易营业数据(新品,对标,自研)-" + dateString + ".xlsx";
             }
             if (ReportType.WEEK == file.getReportType()) {
                 String dateString1 = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd").offset(DateField.HOUR, -6 * 24), "yyyy年M月d日");
                 String dateString2 = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
                 fileName = "金蝶周营业数据-" + dateString1 + "-" + dateString2 + ".xlsx";
             }
-            if (ReportType.MONTH == file.getReportType()) {
-                String dateString1 = DateUtil.format(DateUtil.parse(file.getDt().substring(0, 7) + "-01", "yyyy-MM-dd"), "yyyy年M月d日");
-                String dateString2 = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
-                fileName = "金蝶月营业数据-" + dateString1 + "-" + dateString2 + ".xlsx";
-            }
+//            if (ReportType.MONTH == file.getReportType()) {
+//                String dateString1 = DateUtil.format(DateUtil.parse(file.getDt().substring(0, 7) + "-01", "yyyy-MM-dd"), "yyyy年M月d日");
+//                String dateString2 = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
+//                fileName = "金蝶月营业数据-" + dateString1 + "-" + dateString2 + ".xlsx";
+//            }
             if (ReportType.STOCK == file.getReportType()) {
                 String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
-                fileName = "即时库存(测试)-" + dateString + ".xlsx";
+                fileName = "即时库存-" + dateString + ".xlsx";
+            }
+            if (ReportType.WEEK_REPORT == file.getReportType()) {
+                String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
+                fileName = "营业周报-" + dateString + ".xlsx";
             }
 
             messageBodyPart.setFileName(MimeUtility.encodeText(fileName, "UTF-8", "B"));

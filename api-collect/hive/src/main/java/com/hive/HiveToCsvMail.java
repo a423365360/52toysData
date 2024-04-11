@@ -32,17 +32,15 @@ public class HiveToCsvMail {
             endDay = dt;
         }
 
-        try (Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
-             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-             PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
+//        try (Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
+//             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
+//             PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
 
-//        Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
-//        Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-//        PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL);
-            // 邮箱地址结果
+        Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
+        Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
+        PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL);
+            // 邮箱地址
             ResultSet addrssResultSet = addrssSQL.executeQuery();
-
-            // 收件人
             HashSet<String> addressSet = new HashSet<>();
             while (addrssResultSet.next()) {
                 addressSet.add(addrssResultSet.getString(1));
@@ -54,8 +52,7 @@ public class HiveToCsvMail {
 
             switch (mailFlag) {
                 case "report":
-                    // 金蝶日详情数据
-                    files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.DAY));
+                    files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
 
                     if ("0".equals(testFlag)) {
                         mysqlConnection.close();
@@ -64,18 +61,25 @@ public class HiveToCsvMail {
                         return;
                     }
 
+                    // 金蝶日详情数据
+                    files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.DAY));
+
                     // 营业日报
                     files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     // 管易详情数据
                     files.add(DataUtil.getGuanyi(hiveConnection, endDay, testFlag, ReportType.GUANYI));
 
-
-                    // 金蝶周详情数据
+                    // 周报时间判定
                     if (DateTime.of(endDay, "yyyy-MM-dd").dayOfWeek() == 6) {
+                        // 金蝶周详情数据
                         files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.WEEK));
+
+                        // 营业周报
+//                        files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
                     }
 
+                    // 金蝶月详情数据
                     //        if (DateTime.of(endDay, "yyyy-MM-dd").dayOfMonth() == 1) {
                     //            files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.MONTH));
                     //        }
@@ -103,7 +107,7 @@ public class HiveToCsvMail {
                 MailUtil.sendMail(session, mailTo, files, mailFlag);
             }
 
-        } catch (Exception e) {
-        }
+//        } catch (Exception e) {
+//        }
     }
 }

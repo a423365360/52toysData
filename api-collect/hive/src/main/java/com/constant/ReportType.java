@@ -7,4 +7,5 @@ public class ReportType {
     public static int ADS_DAY = 3;
     public static int GUANYI = 4;
     public static int STOCK = 5;
+    public static int WEEK_REPORT = 6;
 }
