@@ -76,7 +76,10 @@ public class HiveToCsvMail {
                         files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.WEEK));
 
                         // 营业周报
-                        files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
+                        try {
+                            files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
+                        } catch (Exception e) {
+                        }
                     }
 
                     // 金蝶月详情数据
