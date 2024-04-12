@@ -53,6 +53,11 @@ public class HiveToCsvMail {
 
             switch (mailFlag) {
                 case "report":
+                    // 营业周报
+//                    try {
+//                        files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
+//                    } catch (Exception e) {
+//                    }
 
                     if ("0".equals(testFlag)) {
                         mysqlConnection.close();

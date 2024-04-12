@@ -490,7 +490,7 @@ public class DataUtil {
         String businessLineInReachSql = "SELECT * FROM "
                 + "ads_business_line_reach_month WHERE dt = '" + month + "' AND id < 100";
         String businessLineInReachTotalSql = "SELECT * FROM "
-                + "ads_business_line_reach_month_total WHERE dt = '" + month + "'";
+                + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
         AdsBusinessReach adsBusinessReach = new AdsBusinessReach(xssfWorkbook, hiveConnection);
         adsBusinessReach.setSheet("业务线达成-月", businessLineInReachSql, businessLineInReachTotalSql, dt);
 
