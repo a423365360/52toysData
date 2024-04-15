@@ -53,11 +53,8 @@ public class HiveToCsvMail {
 
             switch (mailFlag) {
                 case "report":
-                    // 营业周报
-//                    try {
-//                        files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
-//                    } catch (Exception e) {
-//                    }
+                    // 营业日报
+                    files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     if ("0".equals(testFlag)) {
                         mysqlConnection.close();
@@ -71,9 +68,6 @@ public class HiveToCsvMail {
 
                     // 营业日报
                     files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
-
-                    // 管易详情数据
-                    files.add(DataUtil.getGuanyi(hiveConnection, endDay, testFlag, ReportType.GUANYI));
 
                     // 周报时间判定
                     if (DateTime.of(endDay, "yyyy-MM-dd").dayOfWeek() == 6) {

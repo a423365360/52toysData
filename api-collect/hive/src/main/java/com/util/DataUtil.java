@@ -42,6 +42,23 @@ public class DataUtil {
         adsBusinessReach.setSheet("业务线达成", businessLineInReachSql, businessLineInReachTotalSql, dt);
 
 
+        // 业务线达成-月
+        String month = yesterday.toString("yyyy-MM");
+        String businessLineInReachMonthSql = "SELECT * FROM "
+                + "ads_business_line_reach_month WHERE dt = '" + month + "' AND id < 100";
+        String businessLineInReachTotalMonthSql = "SELECT * FROM "
+                + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
+        AdsBusinessReach adsBusinessReachMonth = new AdsBusinessReach(xssfWorkbook, hiveConnection);
+        adsBusinessReachMonth.setSheet("业务线达成-月(测试)", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
+
+        // 业务线达成-年
+        String year = yesterday.toString("yyyy");
+        String businessLineInReachYearSql = "SELECT * FROM "
+                + "ads_business_line_reach_year WHERE dt = '" + year + "' AND id < 100";
+        AdsBusinessReachYear adsBusinessReachYear = new AdsBusinessReachYear(xssfWorkbook, hiveConnection);
+        adsBusinessReachYear.setSheet("业务线达成-年(测试)", businessLineInReachYearSql, dt);
+
+
         // 日销售数据
         String dayInWeekSql = "SELECT * FROM ads_day_in_week WHERE dt = '" + dt + "' AND id < 100 ORDER BY id";
         String dayInWeekTotalSql = "SELECT * FROM ads_day_in_week_total WHERE dt = '" + dt + "'";
