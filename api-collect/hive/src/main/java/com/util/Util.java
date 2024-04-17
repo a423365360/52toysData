@@ -73,4 +73,19 @@ public class Util {
         }
         return stockSatus;
     }
+
+    public static String mapFieldName(String input) {
+        if (input == null){
+            return "";
+        }
+        if (input.contains("清货")){
+            return "月";
+        }
+        if (input.contains("季度")){
+            return "季";
+        }
+
+        return "月";
+    }
+
 }

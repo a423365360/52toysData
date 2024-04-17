@@ -1,6 +1,7 @@
 package com.excel.imp2;
 
 import com.excel.ExcelSheetBI;
+import com.util.Util;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -40,12 +41,12 @@ public class AdsBusinessReach implements ExcelSheetBI {
         SXSSFSheet sheet1 = xssfWorkbook.createSheet(table);
         SXSSFRow rowField1 = sheet1.createRow(0);
         rowField1.createCell(0).setCellValue("业务线");
-        rowField1.createCell(1).setCellValue("本月达成金额(万元)");
-        rowField1.createCell(2).setCellValue("预估本月销售(万元)");
-        rowField1.createCell(3).setCellValue("预估额达成率");
-        rowField1.createCell(4).setCellValue("时间进度(万元) 预算金额/当月总天数*日报天数");
+        rowField1.createCell(1).setCellValue("本" + Util.mapFieldName(table) + "销售额(万元)");
+        rowField1.createCell(2).setCellValue("预估本" + Util.mapFieldName(table) + "销售(万元)");
+        rowField1.createCell(3).setCellValue("预估达成率");
+        rowField1.createCell(4).setCellValue("时间进度(万元)");
         rowField1.createCell(5).setCellValue("差额(万元)");
-        rowField1.createCell(6).setCellValue("去年同月金额(万元)");
+        rowField1.createCell(6).setCellValue("去年同" + Util.mapFieldName(table) + "金额(万元)");
         ResultSet resultSet1 = ps1.executeQuery();
         ResultSet resultSet1T = ps2.executeQuery();
         int count1 = 1;

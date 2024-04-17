@@ -76,6 +76,7 @@ public class AdsBusinessReachYear implements ExcelSheetWeekBI {
         double totalTimeReach = businessLinePreValue * days / yearDays;
 
         // 合计
+        int totalCount = count1 + 2;
         SXSSFRow row1End = sheet1.createRow(count1 + 1);
         row1End.createCell(0).setCellValue("合计");
         row1End.createCell(1).setCellValue(new BigDecimal(totalSale / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
@@ -86,8 +87,12 @@ public class AdsBusinessReachYear implements ExcelSheetWeekBI {
         SXSSFCell cellDefault = row1End.createCell(4);
         cellDefault.setCellStyle(percentStyle);
         cellDefault.setCellValue(1);
-        row1End.createCell(5).setCellValue(new BigDecimal(totalTimeReach / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-        row1End.createCell(6).setCellValue(new BigDecimal((totalSale - totalTimeReach) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+
+        try {
+            row1End.createCell(5).setCellFormula("SUM(F2:F" + count1 + ")");
+            row1End.createCell(6).setCellFormula("B" + totalCount + "-F" + totalCount);
+        } catch (Exception e) {
+        }
 
         // 其他
         SXSSFRow row1Etc = sheet1.createRow(count1);

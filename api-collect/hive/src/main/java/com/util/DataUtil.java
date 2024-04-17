@@ -27,13 +27,16 @@ public class DataUtil {
         // 查询分区
         DateTime yesterday = DateTime.of(endDay, "yyyy-MM-dd").offset(DateField.HOUR, -24 * 1);
         String dt = yesterday.toDateStr();
+        String year = yesterday.toString("yyyy");
+        String month = yesterday.toString("yyyy-MM");
+        int quarter = yesterday.quarter();
 
         String path = "/datadisk/javalog/dws/DayReport_" + endDay + "_" + sign + DateTime.now().getTime() + ".xlsx";
         if ("0".equals(testFlag)) {
             path = "D:\\test\\DayReport_" + endDay + "_" + sign + DateTime.now().getTime() + ".xlsx";
         }
 
-        // 业务线达成
+        // 业务线达成-月
         String businessLineInReachSql = "SELECT * FROM "
                 + "ads_business_line_reach WHERE dt = '" + dt + "' AND id < 100 ORDER BY id";
         String businessLineInReachTotalSql = "SELECT * FROM "
@@ -42,17 +45,26 @@ public class DataUtil {
         adsBusinessReach.setSheet("业务线达成", businessLineInReachSql, businessLineInReachTotalSql, dt);
 
 
-        // 业务线达成-月
-        String month = yesterday.toString("yyyy-MM");
+        // 业务线达成-月-清货
         String businessLineInReachMonthSql = "SELECT * FROM "
                 + "ads_business_line_reach_month WHERE dt = '" + month + "' AND id < 100";
         String businessLineInReachTotalMonthSql = "SELECT * FROM "
                 + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
         AdsBusinessReach adsBusinessReachMonth = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReachMonth.setSheet("业务线达成-月(测试)", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
+        adsBusinessReachMonth.setSheet("业务线达成-清货(测试)", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
+
+
+        // 业务线达成-季度
+        String quarterPartition = year + "-" + quarter;
+        String businessLineInReachQuarterSql = "SELECT * FROM "
+                + "ads_business_line_reach_quarter WHERE dt = '" + quarterPartition + "' AND id < 100";
+        String businessLineInReachTotalQuarterSql = "SELECT * FROM "
+                + "ads_business_line_reach_total_quarter WHERE dt = '" + quarterPartition + "'";
+        AdsBusinessReach adsBusinessReachSession = new AdsBusinessReach(xssfWorkbook, hiveConnection);
+        adsBusinessReachSession.setSheet("业务线达成-季度(测试)", businessLineInReachQuarterSql, businessLineInReachTotalQuarterSql, dt);
+
 
         // 业务线达成-年
-        String year = yesterday.toString("yyyy");
         String businessLineInReachYearSql = "SELECT * FROM "
                 + "ads_business_line_reach_year WHERE dt = '" + year + "' AND id < 100";
         AdsBusinessReachYear adsBusinessReachYear = new AdsBusinessReachYear(xssfWorkbook, hiveConnection);
@@ -507,7 +519,7 @@ public class DataUtil {
         String businessLineInReachSql = "SELECT * FROM "
                 + "ads_business_line_reach_month WHERE dt = '" + month + "' AND id < 100";
         String businessLineInReachTotalSql = "SELECT * FROM "
-                + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
+                + "ads_business_line_reach_total WHERE dt = '" + dt + "'";
         AdsBusinessReach adsBusinessReach = new AdsBusinessReach(xssfWorkbook, hiveConnection);
         adsBusinessReach.setSheet("业务线达成-月", businessLineInReachSql, businessLineInReachTotalSql, dt);
 
