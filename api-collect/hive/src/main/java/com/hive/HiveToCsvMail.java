@@ -63,11 +63,11 @@ public class HiveToCsvMail {
                         return;
                     }
 
+                    // 管易详情数据
+                    files.add(DataUtil.getGuanyi(hiveConnection, endDay, testFlag, ReportType.GUANYI));
+
                     // 金蝶日详情数据
                     files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.DAY));
-
-                    // 营业日报
-                    files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     // 周报时间判定
                     if (DateTime.of(endDay, "yyyy-MM-dd").dayOfWeek() == 6) {
@@ -79,6 +79,7 @@ public class HiveToCsvMail {
 //                            files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
 //                        } catch (Exception e) {
 //                        }
+
                     }
 
                     // 金蝶月详情数据
