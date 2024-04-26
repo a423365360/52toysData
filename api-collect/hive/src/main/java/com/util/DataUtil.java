@@ -51,7 +51,7 @@ public class DataUtil {
         String businessLineInReachTotalMonthSql = "SELECT * FROM "
                 + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
         AdsBusinessReach adsBusinessReachMonth = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReachMonth.setSheet("业务线达成-清货(测试)", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
+        adsBusinessReachMonth.setSheet("业务线达成-清货", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
 
 
         // 业务线达成-季度
@@ -61,7 +61,7 @@ public class DataUtil {
         String businessLineInReachTotalQuarterSql = "SELECT * FROM "
                 + "ads_business_line_reach_total_quarter WHERE dt = '" + quarterPartition + "'";
         AdsBusinessReach adsBusinessReachSession = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReachSession.setSheet("业务线达成-季度(测试)", businessLineInReachQuarterSql, businessLineInReachTotalQuarterSql, dt);
+        adsBusinessReachSession.setSheet("业务线达成-季度", businessLineInReachQuarterSql, businessLineInReachTotalQuarterSql, dt);
 
 
         // 业务线达成-年
@@ -197,6 +197,11 @@ public class DataUtil {
         rowField.createCell(26).setCellValue("数据类型");
         rowField.createCell(27).setCellValue("结算组织");
         rowField.createCell(28).setCellValue("售价");
+        rowField.createCell(29).setCellValue("销售折扣");
+        rowField.createCell(30).setCellValue("清货标识");
+        rowField.createCell(31).setCellValue("是否重点客户");
+        rowField.createCell(32).setCellValue("是否盲盒统计范围");
+        rowField.createCell(33).setCellValue("是否BOX统计范围");
 
         int rowNumber = 1;
         SXSSFRow row;
@@ -212,8 +217,8 @@ public class DataUtil {
             row.createCell(4).setCellValue(resultSet.getInt("real_quantity"));
             row.createCell(5).setCellValue(resultSet.getInt("pack_model"));
             row.createCell(6).setCellValue(resultSet.getInt("final_number"));
-            row.createCell(7).setCellValue(resultSet.getBigDecimal("tax_price").doubleValue());
-            row.createCell(8).setCellValue(resultSet.getBigDecimal("all_amount_lc").doubleValue());
+            row.createCell(7).setCellValue(resultSet.getDouble("tax_price"));
+            row.createCell(8).setCellValue(resultSet.getDouble("all_amount_lc"));
             row.createCell(9).setCellValue(resultSet.getString("customer_id_name"));
             row.createCell(10).setCellValue(resultSet.getString("customer_group"));
             row.createCell(11).setCellValue(resultSet.getString("sale_department_id_name"));
@@ -234,8 +239,13 @@ public class DataUtil {
             row.createCell(24).setCellValue(resultSet.getBoolean("is_effective"));
             row.createCell(25).setCellValue(resultSet.getString("judge_source"));
             row.createCell(26).setCellValue(resultSet.getString("data_type"));
-            row.createCell(27).setCellValue(resultSet.getString("report_range"));
+            row.createCell(27).setCellValue(resultSet.getString("check_org"));
             row.createCell(28).setCellValue(resultSet.getDouble("material_price"));
+            row.createCell(29).setCellValue(resultSet.getDouble("sale_off"));
+            row.createCell(30).setCellValue(resultSet.getString("clear_flag"));
+            row.createCell(31).setCellValue(resultSet.getBoolean("is_svip"));
+            row.createCell(32).setCellValue(resultSet.getBoolean("blind_flag"));
+            row.createCell(33).setCellValue(resultSet.getBoolean("box_flag"));
             rowNumber++;
         }
 
