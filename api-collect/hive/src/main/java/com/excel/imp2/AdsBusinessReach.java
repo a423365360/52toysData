@@ -42,7 +42,7 @@ public class AdsBusinessReach implements ExcelSheetBI {
         SXSSFRow rowField1 = sheet1.createRow(0);
         rowField1.createCell(0).setCellValue("业务线");
         rowField1.createCell(1).setCellValue("本" + Util.mapFieldName(table) + "销售额(万元)");
-        rowField1.createCell(2).setCellValue("预估本" + Util.mapFieldName(table) + "销售(万元)");
+        rowField1.createCell(2).setCellValue("本" + Util.mapFieldName(table) + "指标(万元)");
         rowField1.createCell(3).setCellValue("预估达成率");
         rowField1.createCell(4).setCellValue("时间进度(万元)");
         rowField1.createCell(5).setCellValue("差额(万元)");

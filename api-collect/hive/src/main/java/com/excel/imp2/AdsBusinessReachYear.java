@@ -41,7 +41,7 @@ public class AdsBusinessReachYear implements ExcelSheetWeekBI {
         SXSSFRow rowField1 = sheet1.createRow(0);
         rowField1.createCell(0).setCellValue("业务线");
         rowField1.createCell(1).setCellValue("销售额(万元)");
-        rowField1.createCell(2).setCellValue("年目标(万元)");
+        rowField1.createCell(2).setCellValue("年指标(万元)");
         rowField1.createCell(3).setCellValue("达成率");
         rowField1.createCell(4).setCellValue("权重");
         rowField1.createCell(5).setCellValue("截止周报预算金额(万元)");

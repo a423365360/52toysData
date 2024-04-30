@@ -73,7 +73,7 @@ public class AdsDayInMonth {
         SXSSFRow dateField = sheetDayInMonth.createRow(1);
         SXSSFRow elseRow = sheetDayInMonth.createRow(2 + businessNumber);
         SXSSFRow totalRow = sheetDayInMonth.createRow(3 + businessNumber);
-        SXSSFRow extraRow = sheetDayInMonth.createRow(12);
+        SXSSFRow extraRow = sheetDayInMonth.createRow(4 + businessNumber);
 
         weekField.createCell(0).setCellValue("业务线");
         int days = yesterday.dayOfMonth();
