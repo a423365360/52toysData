@@ -90,7 +90,8 @@ public class AdsDayInWeek {
 
         ResultSet resultSet2 = ps1.executeQuery();
         ResultSet resultSet2T = ps2.executeQuery();
-//        ResultSet resultSet2E = ps3.executeQuery();
+        ResultSet resultSet2E = ps3.executeQuery();
+
         int count2 = 2;
         double elseDay5 = 0, elseDay6 = 0, elseDay7 = 0, elseDay1 = 0, elseDay2 = 0, elseDay3 = 0, elseDay4 = 0;
         SXSSFRow rowSheet2;
@@ -147,20 +148,20 @@ public class AdsDayInWeek {
             row2Else.createCell(7).setCellValue(new BigDecimal((day4- elseDay4) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
         }
 
-        // 蜡笔小新快闪店
-//        SXSSFRow row2Kuai = sheet2.createRow(count2 + 2);
-//        row2Kuai.createCell(0).setCellValue("蜡笔小新快闪店");
-//        if (resultSet2E.next()) {
-//            row2Kuai.createCell(1).setCellValue(new BigDecimal((resultSet2E.getDouble("day5")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(2).setCellValue(new BigDecimal((resultSet2E.getDouble("day6")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(3).setCellValue(new BigDecimal((resultSet2E.getDouble("day7")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(4).setCellValue(new BigDecimal((resultSet2E.getDouble("day1")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(5).setCellValue(new BigDecimal((resultSet2E.getDouble("day2")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(6).setCellValue(new BigDecimal((resultSet2E.getDouble("day3")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//            row2Kuai.createCell(7).setCellValue(new BigDecimal((resultSet2E.getDouble("day4")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-//        }
+        // 油菜花
+        SXSSFRow row2Kuai = sheet2.createRow(count2 + 2);
+        row2Kuai.createCell(0).setCellValue("直营门店-娃娃机");
+        if (resultSet2E.next()) {
+            row2Kuai.createCell(1).setCellValue(new BigDecimal((resultSet2E.getDouble("day5")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(2).setCellValue(new BigDecimal((resultSet2E.getDouble("day6")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(3).setCellValue(new BigDecimal((resultSet2E.getDouble("day7")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(4).setCellValue(new BigDecimal((resultSet2E.getDouble("day1")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(5).setCellValue(new BigDecimal((resultSet2E.getDouble("day2")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(6).setCellValue(new BigDecimal((resultSet2E.getDouble("day3")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            row2Kuai.createCell(7).setCellValue(new BigDecimal((resultSet2E.getDouble("day4")) / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+        }
         ps1.close();
         ps2.close();
-//        ps3.close();
+        ps3.close();
     }
 }

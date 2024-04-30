@@ -32,13 +32,13 @@ public class HiveToCsvMail {
             endDay = dt;
         }
 
-//        try (Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
-//             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-//             PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
+        try (Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
+             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
+             PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
 
-        Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
-        Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-        PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL);
+//        Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
+//        Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
+//        PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL);
 
             // 邮箱地址
             ResultSet addrssResultSet = addrssSQL.executeQuery();
@@ -53,8 +53,8 @@ public class HiveToCsvMail {
 
             switch (mailFlag) {
                 case "report":
-                    // 金蝶日详情数据
-                    files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.DAY));
+                    // 营业日报
+                    files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     if ("0".equals(testFlag)) {
                         mysqlConnection.close();
@@ -66,8 +66,8 @@ public class HiveToCsvMail {
                     // 管易详情数据
                     files.add(DataUtil.getGuanyi(hiveConnection, endDay, testFlag, ReportType.GUANYI));
 
-                    // 营业日报
-                    files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
+                    // 金蝶日详情数据
+                    files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.DAY));
 
                     // 周报时间判定
                     if (DateTime.of(endDay, "yyyy-MM-dd").dayOfWeek() == 6) {
@@ -112,7 +112,7 @@ public class HiveToCsvMail {
                 MailUtil.sendMail(session, mailTo, files, mailFlag);
             }
 
-//        } catch (Exception e) {
-//        }
+        } catch (Exception e) {
+        }
     }
 }
