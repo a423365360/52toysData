@@ -37,7 +37,9 @@ public class AdsDayInWeek {
         PreparedStatement ps3 = hiveConnection.prepareStatement(sql3);
 
         SXSSFSheet sheet2 = xssfWorkbook.createSheet(table);
-        SXSSFRow rowField2 = sheet2.createRow(0);
+        SXSSFRow rowField0 = sheet2.createRow(0);
+        rowField0.createCell(0).setCellValue(table);
+        SXSSFRow rowField2 = sheet2.createRow(1);
         rowField2.createCell(0).setCellValue("业务线");
         rowField2.createCell(1).setCellValue("星期五");
         rowField2.createCell(2).setCellValue("星期六");
@@ -65,7 +67,7 @@ public class AdsDayInWeek {
         DateTime week6 = DateUtil.dateNew(week1).offset(DateField.HOUR, -24 * 2);
         DateTime week7 = DateUtil.dateNew(week1).offset(DateField.HOUR, -24);
 
-        SXSSFRow rowField2d = sheet2.createRow(1);
+        SXSSFRow rowField2d = sheet2.createRow(2);
         SXSSFCell row21 = rowField2d.createCell(1);
         row21.setCellStyle(dateCellStyle);
         row21.setCellValue(week5);
@@ -92,7 +94,7 @@ public class AdsDayInWeek {
         ResultSet resultSet2T = ps2.executeQuery();
         ResultSet resultSet2E = ps3.executeQuery();
 
-        int count2 = 2;
+        int count2 = 3;
         double elseDay5 = 0, elseDay6 = 0, elseDay7 = 0, elseDay1 = 0, elseDay2 = 0, elseDay3 = 0, elseDay4 = 0;
         SXSSFRow rowSheet2;
         while (resultSet2.next()) {

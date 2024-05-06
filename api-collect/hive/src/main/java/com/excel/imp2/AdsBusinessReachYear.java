@@ -38,7 +38,9 @@ public class AdsBusinessReachYear implements ExcelSheetWeekBI {
         PreparedStatement ps1 = hiveConnection.prepareStatement(sql);
 
         SXSSFSheet sheet1 = xssfWorkbook.createSheet(table);
-        SXSSFRow rowField1 = sheet1.createRow(0);
+        SXSSFRow rowField0 = sheet1.createRow(0);
+        rowField0.createCell(0).setCellValue(table);
+        SXSSFRow rowField1 = sheet1.createRow(1);
         rowField1.createCell(0).setCellValue("业务线");
         rowField1.createCell(1).setCellValue("销售额(万元)");
         rowField1.createCell(2).setCellValue("年指标(万元)");
@@ -47,7 +49,7 @@ public class AdsBusinessReachYear implements ExcelSheetWeekBI {
         rowField1.createCell(5).setCellValue("截止周报预算金额(万元)");
         rowField1.createCell(6).setCellValue("累计达成与预算差额(万元)");
         ResultSet resultSet1 = ps1.executeQuery();
-        int count1 = 1;
+        int count1 = 2;
         double monthReach = 0, businessLinePreValue = 0;
         SXSSFRow rowSheet1;
         SXSSFCell cell3RowSheet1, cell3RowSheet2;

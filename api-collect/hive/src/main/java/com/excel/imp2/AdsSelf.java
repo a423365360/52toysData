@@ -34,7 +34,9 @@ public class AdsSelf implements ExcelSheetBI {
 
 
         SXSSFSheet sheet4 = xssfWorkbook.createSheet(table);
-        SXSSFRow rowField4 = sheet4.createRow(0);
+        SXSSFRow sheetName = sheet4.createRow(0);
+        sheetName.createCell(0).setCellValue(table);
+        SXSSFRow rowField4 = sheet4.createRow(1);
         rowField4.createCell(0).setCellValue("产品线");
         rowField4.createCell(1).setCellValue("业务线");
         rowField4.createCell(2).setCellValue("产品系列");
@@ -47,7 +49,7 @@ public class AdsSelf implements ExcelSheetBI {
 
 
         ResultSet resultSet4 = ps1.executeQuery();
-        int count4 = 1, sum, daySaleQuantity;
+        int count4 = 2, sum, daySaleQuantity;
         SXSSFRow rowSheet4 = null;
         SXSSFCell cell3RowSheet4 = null;
         String tempProductLine = "盲盒", table4ProductLine;

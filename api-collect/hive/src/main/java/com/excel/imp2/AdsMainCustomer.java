@@ -36,7 +36,9 @@ public class AdsMainCustomer implements ExcelSheetBI {
         SXSSFSheet sheet3 = xssfWorkbook.createSheet(table);
 
         ResultSet resultSet3F = ps1.executeQuery();
-        SXSSFRow rowField3F = sheet3.createRow(0);
+        SXSSFRow sheetName = sheet3.createRow(0);
+        sheetName.createCell(0).setCellValue(table);
+        SXSSFRow rowField3F = sheet3.createRow(1);
         int count3F = 1;
         while (resultSet3F.next()) {
             rowField3F.createCell(count3F).setCellValue(resultSet3F.getString("product_series"));
@@ -45,7 +47,7 @@ public class AdsMainCustomer implements ExcelSheetBI {
 
         // 主要客户
         ResultSet resultSet3 = ps2.executeQuery();
-        int count3 = 1;
+        int count3 = 2;
         SXSSFRow rowSheet3;
         while (resultSet3.next()) {
             rowSheet3 = sheet3.createRow(count3);
