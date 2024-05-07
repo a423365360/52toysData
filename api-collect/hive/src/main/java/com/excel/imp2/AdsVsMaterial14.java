@@ -36,9 +36,8 @@ public class AdsVsMaterial14 implements ExcelSheetBI {
         // 新品对标产品(物料)
         int sameFlag1 = -1, sameFlag2 = -1;
 
-        try (
-                PreparedStatement ps1 = hiveConnection.prepareStatement(sql1);
-                PreparedStatement ps2 = hiveConnection.prepareStatement(sql2)) {
+        try (PreparedStatement ps1 = hiveConnection.prepareStatement(sql1);
+             PreparedStatement ps2 = hiveConnection.prepareStatement(sql2)) {
 
             HashMap<String, Integer> fisrtDayNumberMaterialMap = new HashMap<>();
             ResultSet firstDayMaterialResultSet = ps2.executeQuery();
@@ -52,6 +51,10 @@ public class AdsVsMaterial14 implements ExcelSheetBI {
             HashSet<Integer> rk1MateialList = new HashSet<>();
             ArrayList<Integer> daysMaterial;
             SXSSFRow row81, row82, rowSheet8;
+
+            // Sheet名称
+            sheet8.createRow(0).createCell(0).setCellValue(table);
+
             while (resultSet8.next()) {
                 int rk1 = resultSet8.getInt("rk1");
                 int rk2 = resultSet8.getInt("rk2");

@@ -55,8 +55,8 @@ public class AdsVsTopCustomer implements ExcelSheetBI {
             if (sameRk1 != team1) {
                 sameRk1 = team1;
                 sheet7 = xssfWorkbook.createSheet(productSeries1.replace(" ", "") + "-批发客户");
-                sheet7.createRow(0).createCell(0).setCellValue(productSeries1.replace(" ", "") + "-批发客户");
-                row7FieldSheet7 = sheet7.createRow(1);
+                sheet7.createRow(0).createCell(0).setCellValue(table);
+                row7FieldSheet7 = sheet7.createRow(2);
                 row7FieldSheet7.createCell(0).setCellValue("客户");
                 row7FieldSheet7.createCell(1).setCellValue(productSeries1);
                 row7FieldSheet7.createCell(2).setCellValue(productSeries2);
@@ -65,7 +65,7 @@ public class AdsVsTopCustomer implements ExcelSheetBI {
                 } catch (Exception e) {
                 }
             }
-            row7Sheet7 = sheet7.createRow(rank0 + 1);
+            row7Sheet7 = sheet7.createRow(rank0 + 2);
             row7Sheet7.createCell(0).setCellValue(customer);
             row7Sheet7.createCell(1).setCellValue(totalResult1);
             row7Sheet7.createCell(2).setCellValue(totalResult2);

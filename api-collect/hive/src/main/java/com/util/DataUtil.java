@@ -76,7 +76,7 @@ public class DataUtil {
         String dayInWeekTotalSql = "SELECT * FROM ads_day_in_week_total WHERE dt = '" + dt + "'";
         String dayInWeekExtraSql = "SELECT * FROM ads_day_in_week_extra WHERE dt = '" + dt + "'";
         AdsDayInWeek adsDayInWeek = new AdsDayInWeek(xssfWorkbook, hiveConnection);
-        adsDayInWeek.setSheet("日销售数据", dayInWeekSql, dayInWeekTotalSql, dayInWeekExtraSql, yesterday);
+        adsDayInWeek.setSheet("本周日销售额", dayInWeekSql, dayInWeekTotalSql, dayInWeekExtraSql, yesterday);
 
 
         // 当月日销售量
@@ -84,7 +84,7 @@ public class DataUtil {
         String dayInMonthTotal = "SELECT * FROM ads_day_in_month_total WHERE dt='" + dt + "'";
         String dayInMonthExtra = "SELECT * FROM ads_day_in_month_extra WHERE dt='" + dt + "'";
         AdsDayInMonth adsDayInMonth = new AdsDayInMonth(xssfWorkbook, hiveConnection);
-        adsDayInMonth.setSheet("当月日销售量", dayInMonth, dayInMonthTotal, dayInMonthExtra, yesterday);
+        adsDayInMonth.setSheet("本月日销售额", dayInMonth, dayInMonthTotal, dayInMonthExtra, yesterday);
 
 
         // 主要系列

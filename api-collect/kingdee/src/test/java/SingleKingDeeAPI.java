@@ -1,3 +1,5 @@
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kingdee.bos.webapi.sdk.K3CloudApi;
@@ -9,6 +11,7 @@ import java.util.List;
 
 public class SingleKingDeeAPI {
     public static void main(String[] args) throws Exception {
+        DateTime ss = DateTime.now();
         K3CloudApi client = new K3CloudApi();
         String formId = "sal_outstock";
         int limit = 10000;
@@ -34,8 +37,8 @@ public class SingleKingDeeAPI {
         jsonData.put("SubSystemId", "");
         JSONArray jArray = new JSONArray();
 
-        String dayStart = "2024-03-31";
-        String dayEnd = "2024-04-01";
+        String dayStart = "2024-03-01";
+        String dayEnd = "2024-03-02";
         String start = "{\"Left\":\"(\"," +
                 "\"FieldName\":\"FcreateDate\"," +
                 "\"Compare\":\">=\"," +
@@ -78,5 +81,8 @@ public class SingleKingDeeAPI {
                 Assert.fail(e.getMessage());
             }
         }
+        DateTime ee = DateTime.now();
+        long between = ee.between(ss, DateUnit.MS);
+        System.out.println("计算时长" + between);
     }
 }

@@ -60,6 +60,10 @@ public class AdsVs14 implements ExcelSheetBI {
             ArrayList<Integer> days;
             String productLineFlag = "", group = "";
             SXSSFRow row61, row62, rowSheet6, rowG0, rowProductSeries = null;
+
+            // Sheet名称
+            sheet6.createRow(0).createCell(0).setCellValue(table);
+
             while (resultSet5.next()) {
                 int rk1 = resultSet5.getInt("rk1");
                 int rk2 = resultSet5.getInt("rk2");

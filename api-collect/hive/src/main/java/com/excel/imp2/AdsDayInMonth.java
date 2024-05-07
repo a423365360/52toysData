@@ -69,7 +69,7 @@ public class AdsDayInMonth {
         }
 
         int businessNumber = businessLineField.size();
-        SXSSFRow sheetName = sheetDayInMonth.createRow(1);
+        SXSSFRow sheetName = sheetDayInMonth.createRow(0);
         sheetName.createCell(0).setCellValue(table);
         SXSSFRow weekField = sheetDayInMonth.createRow(1);
         SXSSFRow dateField = sheetDayInMonth.createRow(2);
@@ -88,7 +88,7 @@ public class AdsDayInMonth {
         //TODO TEST
         SXSSFRow rowSheetDayInMonth;
         for (int i = 1; i <= businessNumber; i++) {
-            rowSheetDayInMonth = sheetDayInMonth.createRow(i + 1);
+            rowSheetDayInMonth = sheetDayInMonth.createRow(i + 2);
             rowSheetDayInMonth.createCell(0).setCellValue(businessLineField.get(i));
             for (int j = 1; j <= days; j++) {
                 for (DaySale unit : daySaleArrayList) {
