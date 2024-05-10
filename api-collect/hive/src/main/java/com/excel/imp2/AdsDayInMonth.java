@@ -38,15 +38,15 @@ public class AdsDayInMonth {
 
         PreparedStatement ps1 = hiveConnection.prepareStatement(sql1);
         PreparedStatement ps2 = hiveConnection.prepareStatement(sql2);
-        PreparedStatement ps3 = hiveConnection.prepareStatement(sql3);
+//        PreparedStatement ps3 = hiveConnection.prepareStatement(sql3);
 
         SXSSFSheet sheetDayInMonth = xssfWorkbook.createSheet(table);
         ResultSet rsDayInMonth = ps1.executeQuery();
         ResultSet rsDayInMonthTotal = ps2.executeQuery();
-        ResultSet rsDayInMonthExtra = ps3.executeQuery();
+//        ResultSet rsDayInMonthExtra = ps3.executeQuery();
 
         ArrayList<DaySale> daySaleArrayList = new ArrayList<>();
-        ArrayList<DaySale> daySaleExtraArrayList = new ArrayList<>();
+//        ArrayList<DaySale> daySaleExtraArrayList = new ArrayList<>();
         HashMap<Integer, String> businessLineField = new HashMap<>();
         HashMap<Integer, Double> dateTotalSale = new HashMap<>();
 
@@ -61,12 +61,12 @@ public class AdsDayInMonth {
         }
 
         //TODO TEST
-        while (rsDayInMonthExtra.next()) {
-            Date fdate = rsDayInMonthExtra.getDate("fdate");
-            Double saleMoney = rsDayInMonthExtra.getDouble("sale_money");
-            int dayNumber = DateTime.of(fdate).dayOfMonth();
-            daySaleExtraArrayList.add(new DaySale(1, dayNumber, saleMoney));
-        }
+//        while (rsDayInMonthExtra.next()) {
+//            Date fdate = rsDayInMonthExtra.getDate("fdate");
+//            Double saleMoney = rsDayInMonthExtra.getDouble("sale_money");
+//            int dayNumber = DateTime.of(fdate).dayOfMonth();
+//            daySaleExtraArrayList.add(new DaySale(1, dayNumber, saleMoney));
+//        }
 
         int businessNumber = businessLineField.size();
         SXSSFRow sheetName = sheetDayInMonth.createRow(0);
@@ -75,7 +75,7 @@ public class AdsDayInMonth {
         SXSSFRow dateField = sheetDayInMonth.createRow(2);
         SXSSFRow elseRow = sheetDayInMonth.createRow(3 + businessNumber);
         SXSSFRow totalRow = sheetDayInMonth.createRow(4 + businessNumber);
-        SXSSFRow extraRow = sheetDayInMonth.createRow(5 + businessNumber);
+//        SXSSFRow extraRow = sheetDayInMonth.createRow(5 + businessNumber);
 
         weekField.createCell(0).setCellValue("业务线");
         int days = yesterday.dayOfMonth();
@@ -85,7 +85,6 @@ public class AdsDayInMonth {
             weekField.createCell(i + 1).setCellValue(date0.dayOfWeekEnum().toChinese());
         }
 
-        //TODO TEST
         SXSSFRow rowSheetDayInMonth;
         for (int i = 1; i <= businessNumber; i++) {
             rowSheetDayInMonth = sheetDayInMonth.createRow(i + 2);
@@ -123,17 +122,17 @@ public class AdsDayInMonth {
         }
 
         // 油菜花
-        extraRow.createCell(0).setCellValue("直营门店-娃娃机");
-        for (int j = 1; j < 31; j++) {
-            for (DaySale unit : daySaleExtraArrayList) {
-                if (unit.getDayOfMonth() == j) {
-                    extraRow.createCell(j).setCellValue(new BigDecimal(unit.getSaleMoney() / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                }
-            }
-        }
+//        extraRow.createCell(0).setCellValue("直营门店-娃娃机");
+//        for (int j = 1; j < 31; j++) {
+//            for (DaySale unit : daySaleExtraArrayList) {
+//                if (unit.getDayOfMonth() == j) {
+//                    extraRow.createCell(j).setCellValue(new BigDecimal(unit.getSaleMoney() / 10000).setScale(2, RoundingMode.HALF_UP).doubleValue());
+//                }
+//            }
+//        }
 
         ps1.close();
         ps2.close();
-        ps3.close();
+//        ps3.close();
     }
 }

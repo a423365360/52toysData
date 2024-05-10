@@ -42,8 +42,10 @@ public class DataUtil {
         String businessLineInReachTotalSql = "SELECT * FROM "
                 + "ads_business_line_reach_total WHERE dt = '" + dt + "'";
         AdsBusinessReach adsBusinessReach = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReach.setSheet("业务线达成", businessLineInReachSql, businessLineInReachTotalSql, dt);
-
+        try {
+            adsBusinessReach.setSheet("业务线达成", businessLineInReachSql, businessLineInReachTotalSql, dt);
+        } catch (Exception e) {
+        }
 
         // 业务线达成-月-清货
         String businessLineInReachMonthSql = "SELECT * FROM "
@@ -51,8 +53,10 @@ public class DataUtil {
         String businessLineInReachTotalMonthSql = "SELECT * FROM "
                 + "ads_business_line_reach_total_month WHERE dt = '" + month + "'";
         AdsBusinessReach adsBusinessReachMonth = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReachMonth.setSheet("业务线达成-清货", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
-
+        try {
+            adsBusinessReachMonth.setSheet("业务线达成-清货", businessLineInReachMonthSql, businessLineInReachTotalMonthSql, dt);
+        } catch (Exception e) {
+        }
 
         // 业务线达成-季度
         String quarterPartition = year + "-" + quarter;
@@ -61,31 +65,39 @@ public class DataUtil {
         String businessLineInReachTotalQuarterSql = "SELECT * FROM "
                 + "ads_business_line_reach_total_quarter WHERE dt = '" + quarterPartition + "'";
         AdsBusinessReach adsBusinessReachSession = new AdsBusinessReach(xssfWorkbook, hiveConnection);
-        adsBusinessReachSession.setSheet("业务线达成-季度", businessLineInReachQuarterSql, businessLineInReachTotalQuarterSql, dt);
-
+        try {
+            adsBusinessReachSession.setSheet("业务线达成-季度", businessLineInReachQuarterSql, businessLineInReachTotalQuarterSql, dt);
+        } catch (Exception e) {
+        }
 
         // 业务线达成-年
         String businessLineInReachYearSql = "SELECT * FROM "
                 + "ads_business_line_reach_year WHERE dt = '" + year + "' AND id < 100";
         AdsBusinessReachYear adsBusinessReachYear = new AdsBusinessReachYear(xssfWorkbook, hiveConnection);
-        adsBusinessReachYear.setSheet("业务线达成-年(测试)", businessLineInReachYearSql, dt);
-
+        try {
+            adsBusinessReachYear.setSheet("业务线达成-年(测试)", businessLineInReachYearSql, dt);
+        } catch (Exception e) {
+        }
 
         // 日销售数据
         String dayInWeekSql = "SELECT * FROM ads_day_in_week WHERE dt = '" + dt + "' AND id < 100 ORDER BY id";
         String dayInWeekTotalSql = "SELECT * FROM ads_day_in_week_total WHERE dt = '" + dt + "'";
         String dayInWeekExtraSql = "SELECT * FROM ads_day_in_week_extra WHERE dt = '" + dt + "'";
         AdsDayInWeek adsDayInWeek = new AdsDayInWeek(xssfWorkbook, hiveConnection);
-        adsDayInWeek.setSheet("本周日销售额", dayInWeekSql, dayInWeekTotalSql, dayInWeekExtraSql, yesterday);
-
+        try {
+            adsDayInWeek.setSheet("本周日销售额", dayInWeekSql, dayInWeekTotalSql, dayInWeekExtraSql, yesterday);
+        } catch (Exception e) {
+        }
 
         // 当月日销售量
         String dayInMonth = "SELECT * FROM ads_day_in_month WHERE dt='" + dt + "'";
         String dayInMonthTotal = "SELECT * FROM ads_day_in_month_total WHERE dt='" + dt + "'";
         String dayInMonthExtra = "SELECT * FROM ads_day_in_month_extra WHERE dt='" + dt + "'";
         AdsDayInMonth adsDayInMonth = new AdsDayInMonth(xssfWorkbook, hiveConnection);
-        adsDayInMonth.setSheet("本月日销售额", dayInMonth, dayInMonthTotal, dayInMonthExtra, yesterday);
-
+        try {
+            adsDayInMonth.setSheet("本月日销售额", dayInMonth, dayInMonthTotal, dayInMonthExtra, yesterday);
+        } catch (Exception e) {
+        }
 
         // 主要系列
         String topBusinessLineSql = "SELECT * FROM top_product_series WHERE dt = '" + dt + "' ORDER BY id";
@@ -93,39 +105,49 @@ public class DataUtil {
         String mainCustomerPivotSql = "SELECT * FROM "
                 + "ads_main_customer_pivot WHERE dt = '" + dt + "' ORDER BY customer_rank";
         AdsMainCustomer adsMainCustomer = new AdsMainCustomer(xssfWorkbook, hiveConnection);
-        adsMainCustomer.setSheet("主要客户", topBusinessLineSql, mainCustomerPivotSql, dt);
-
+        try {
+            adsMainCustomer.setSheet("主要客户", topBusinessLineSql, mainCustomerPivotSql, dt);
+        } catch (Exception e) {
+        }
 
         // 自研产品
         String vsSelf14 = "SELECT * FROM "
                 + "ads_self_development_14 WHERE dt='" + dt + "' ORDER BY product_line DESC, business_line, sale_time DESC";
         AdsSelf adsSelf = new AdsSelf(xssfWorkbook, hiveConnection);
-        adsSelf.setSheet("自研产品", vsSelf14, vsSelf14, dt);
-
+        try {
+            adsSelf.setSheet("自研产品", vsSelf14, vsSelf14, dt);
+        } catch (Exception e) {
+        }
 
         // 批发客户
         String vsTopCustomerSql = "SELECT * FROM "
                 + "ads_vs_top_customer WHERE dt='" + dt + "' ORDER BY rk1, rank0";
         String vsTotalSql = "SELECT rk1, total_result2 FROM ads_vs_total_sale WHERE dt='" + dt + "'";
         AdsVsTopCustomer adsVsTopCustomer = new AdsVsTopCustomer(xssfWorkbook, hiveConnection);
-        adsVsTopCustomer.setSheet("批发客户", vsTopCustomerSql, vsTotalSql, dt);
-
+        try {
+            adsVsTopCustomer.setSheet("批发客户", vsTopCustomerSql, vsTotalSql, dt);
+        } catch (Exception e) {
+        }
 
         // 新品对标产品
         String vsProductSeriesSql = "SELECT * FROM "
                 + "ads_vs_14 WHERE dt='" + dt + "' ORDER BY rk3, rk1, rk2, id";
         String vsProductSeriesFirstDaySql = "SELECT product_series, total_number FROM ads_vs_first_day WHERE dt ='" + dt + "'";
         AdsVs14 adsVs14 = new AdsVs14(xssfWorkbook, hiveConnection);
-        adsVs14.setSheet("新品对标产品", vsProductSeriesSql, vsProductSeriesFirstDaySql, dt);
-
+        try {
+            adsVs14.setSheet("新品对标产品", vsProductSeriesSql, vsProductSeriesFirstDaySql, dt);
+        } catch (Exception e) {
+        }
 
         // 新品对标产品(物料)
         String vsMaterialSql = "SELECT * FROM "
                 + "ads_new_14 WHERE dt='" + dt + "' AND material_name IS NOT NULL ORDER BY rk1, rk2, material_name, id";
         String vsMaterialFirstDaySql = "SELECT material_name, total_number FROM ads_new_first_day WHERE dt ='" + dt + "'";
         AdsVsMaterial14 adsVsMaterial14 = new AdsVsMaterial14(xssfWorkbook, hiveConnection);
-        adsVsMaterial14.setSheet("新品对标产品(物料)", vsMaterialSql, vsMaterialFirstDaySql, dt);
-
+        try {
+            adsVsMaterial14.setSheet("新品对标产品(物料)", vsMaterialSql, vsMaterialFirstDaySql, dt);
+        } catch (Exception e) {
+        }
 
         FileOutputStream fileOutputStream = new FileOutputStream(path);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
