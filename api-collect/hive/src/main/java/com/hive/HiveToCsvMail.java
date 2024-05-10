@@ -36,10 +36,6 @@ public class HiveToCsvMail {
              Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
              PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
 
-//        Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
-//        Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-//        PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL);
-
             // 邮箱地址
             ResultSet addrssResultSet = addrssSQL.executeQuery();
             HashSet<String> addressSet = new HashSet<>();
@@ -73,13 +69,6 @@ public class HiveToCsvMail {
                     if (DateTime.of(endDay, "yyyy-MM-dd").dayOfWeek() == 6) {
                         // 金蝶周详情数据
                         files.add(DataUtil.getFilePath(hiveConnection, endDay, testFlag, ReportType.WEEK));
-
-                        // 营业周报
-//                        try {
-//                            files.add(DataUtil.getWeekReport(hiveConnection, endDay, testFlag, ReportType.WEEK_REPORT));
-//                        } catch (Exception e) {
-//                        }
-
                     }
 
                     // 金蝶月详情数据
@@ -89,7 +78,6 @@ public class HiveToCsvMail {
 
                     break;
                 case "stock":
-
                     // 即时库存
                     files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK));
                     break;
