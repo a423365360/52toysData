@@ -101,10 +101,10 @@ public class AdsVsMaterial14 implements ExcelSheetBI {
                     row81 = sheet8.createRow(count8);
                     row81.createCell(3).setCellValue(productSeries);
 
-                    // 中文日期
+                    // TODO 中文日期
                     for (int columnNumber = 4; columnNumber < maxDays + 4; columnNumber++) {
                         row81.createCell(columnNumber).setCellValue(
-                                DateUtil.dateNew(saleDate).offset(DateField.HOUR, 24 * (columnNumber - 3)).dayOfWeekEnum().toChinese());
+                                DateUtil.dateNew(saleDate).offset(DateField.HOUR, 24 * (columnNumber - 4)).dayOfWeekEnum().toChinese());
                     }
 
                     count8++;
