@@ -149,6 +149,15 @@ public class DataUtil {
         } catch (Exception e) {
         }
 
+        // 油菜花
+        String youcaihuaSql1 = "SELECT * FROM ads_youcaihua_panel WHERE dt='" + dt + "'";
+        String youcaihuaSql2 = "SELECT * FROM ads_youcaihua_panel_field WHERE dt='" + dt + "'";
+        AdsYoucaihua youcaihua = new AdsYoucaihua(xssfWorkbook, hiveConnection);
+        try {
+            youcaihua.setSheet("油菜花-娃娃机", youcaihuaSql1, youcaihuaSql2, yesterday);
+        } catch (Exception e) {
+        }
+
         FileOutputStream fileOutputStream = new FileOutputStream(path);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
         xssfWorkbook.write(bufferedOutputStream);
