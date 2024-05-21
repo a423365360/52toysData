@@ -32,7 +32,8 @@ public class AdsVs14 implements ExcelSheetBI {
 
     @Override
     public void setSheet(String table, String sql1, String sql2, String dt) throws Exception {
-
+        // TODO MOSS
+        String mossSql = "select * from ads_vs_14_550 where dt ='" + dt + "'";
 
         CellStyle dateCellStyle = xssfWorkbook.createCellStyle();
         DataFormat dataFormat = xssfWorkbook.createDataFormat();
@@ -44,8 +45,9 @@ public class AdsVs14 implements ExcelSheetBI {
         // 新品对标产品
 
         try (PreparedStatement ps1 = hiveConnection.prepareStatement(sql1);
-             PreparedStatement ps2 = hiveConnection.prepareStatement(sql2)) {
-            
+             PreparedStatement ps2 = hiveConnection.prepareStatement(sql2);
+             PreparedStatement ps3 = hiveConnection.prepareStatement(mossSql)) {
+
             HashMap<String, Integer> fisrtDayNumberMap = new HashMap<>();
             ResultSet firstDayResultSet = ps2.executeQuery();
             while (firstDayResultSet.next()) {
@@ -53,8 +55,10 @@ public class AdsVs14 implements ExcelSheetBI {
             }
             SXSSFSheet sheet6 = xssfWorkbook.createSheet(table);
             ResultSet resultSet5 = ps1.executeQuery();
+            ResultSet resultSetMoss = ps3.executeQuery();
             int count6 = 0, sameFlag1 = -1, sameFlag2 = -1, sameGraphFlag1 = -1, sum, firstDayNumber, productLineCount = 0, sefSumSum = 0;
             int[] selfSum = new int[14];
+            int[] selfMoss = new int[14];
             ArrayList<SXSSFRow> rows = new ArrayList<>();
             HashSet<Integer> rk1List = new HashSet<>();
             ArrayList<Integer> days;
@@ -113,6 +117,28 @@ public class AdsVs14 implements ExcelSheetBI {
                 int maxDays = Math.min(14, max);
                 for (int i = 1; i <= maxDays; i++) {
                     days.add(resultSet5.getInt("day" + i));
+                }
+
+                // TODO  插入京东和拼多多
+                for (int i = 0; i < 14; i++) {
+                    selfMoss[i] = 0;
+                }
+                if (productSeries.equals("万能匣系列《流浪地球2》-550系列智能量子计算机") && businessLine.equals("直播-抖音店铺")) {
+                    for (int i = 0; i < 2; i++) {
+                        resultSetMoss.next();
+
+                        SXSSFRow mossRoss = sheet6.createRow(count6);
+                        mossRoss.createCell(1).setCellValue(group);
+                        mossRoss.createCell(2).setCellValue(resultSetMoss.getString("business_line"));
+                        int mossSum = 0;
+                        for (int j = 0; j < maxDays; j++) {
+                            mossRoss.createCell(j + startOffset).setCellValue(resultSetMoss.getInt("day" + (j + 1)));
+                            mossSum += resultSetMoss.getInt("day" + (j + 1));
+                            selfMoss[j] = selfMoss[j] + resultSetMoss.getInt("day" + (j + 1));
+                        }
+                        mossRoss.createCell(maxDays + startOffset).setCellValue(mossSum);
+                        count6++;
+                    }
                 }
 
                 // 新增Block 表头
@@ -197,11 +223,11 @@ public class AdsVs14 implements ExcelSheetBI {
 
                     // 自营合计求和
                     if (!("批发".equals(businessLine))) {
-                        selfSum[i] = selfSum[i] + dayNumber;
+                        selfSum[i] = selfSum[i] + dayNumber + selfMoss[i];
                     }
 
                     // 业务线合计
-                    sum += dayNumber;
+                    sum += (dayNumber + selfMoss[i]);
                 }
                 rowSheet6.createCell(maxDays + startOffset).setCellValue(sum);
                 count6++;

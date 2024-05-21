@@ -11,10 +11,7 @@ import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class StockDetails implements ExcelSheet {
     SXSSFWorkbook xssfWorkbook;
@@ -89,9 +86,10 @@ public class StockDetails implements ExcelSheet {
         rowField.createCell(48).setCellValue("采购次数");
         rowField.createCell(49).setCellValue("最后一次采购量");
         rowField.createCell(50).setCellValue("最后一次采购量（拆中盒）");
-        rowField.createCell(51).setCellValue("未到货");
-        rowField.createCell(52).setCellValue("未到货（拆中盒）");
-        rowField.createCell(53).setCellValue("是否包含[赠品]");
+        rowField.createCell(51).setCellValue("最后一次采购时间");
+        rowField.createCell(52).setCellValue("未到货");
+        rowField.createCell(53).setCellValue("未到货（拆中盒）");
+        rowField.createCell(54).setCellValue("是否包含[赠品]");
 
         Date now = DateTime.now().toSqlDate();
 
@@ -111,6 +109,9 @@ public class StockDetails implements ExcelSheet {
             qtySplit = qty;
             avbQtySplit = avbQty;
             Date saleDate = stockDetailResultSet.getDate("sale_date");
+
+            Timestamp lastBuyTime = stockDetailResultSet.getTimestamp("last_buy_time");
+
             qtyQuarter = stockDetailResultSet.getInt("qty_quarter");
             qtyMonth = stockDetailResultSet.getInt("qty_month");
             qtyWeek4 = stockDetailResultSet.getInt("qty_week4");
@@ -213,9 +214,12 @@ public class StockDetails implements ExcelSheet {
             row.createCell(48).setCellValue(stockDetailResultSet.getInt("buy_times"));
             row.createCell(49).setCellValue(lastBuy);
             row.createCell(50).setCellValue(lastBuySplit);
-            row.createCell(51).setCellValue(future);
-            row.createCell(52).setCellValue(futureSplit);
-            row.createCell(53).setCellValue(materialName.contains("赠品"));
+            if (lastBuyTime != null) {
+                row.createCell(51).setCellValue(DateTime.of(lastBuyTime).toString("yyyy-MM-dd HH:mm:ss"));
+            }
+            row.createCell(52).setCellValue(future);
+            row.createCell(53).setCellValue(futureSplit);
+            row.createCell(54).setCellValue(materialName.contains("赠品"));
             count++;
         }
         ps.close();
