@@ -67,6 +67,8 @@ public class AdsVs14 implements ExcelSheetBI {
 
             // Sheet名称
             sheet6.createRow(0).createCell(0).setCellValue(table);
+
+            // TODO 京东拼多多每日合计
             for (int i = 0; i < 14; i++) {
                 selfMoss[i] = 0;
             }

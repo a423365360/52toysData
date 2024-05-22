@@ -81,21 +81,22 @@ public class StockDetails implements ExcelSheet {
         rowField.createCell(43).setCellValue("可用库存预警（近30天销量）");
         rowField.createCell(44).setCellValue("累计进货");
         rowField.createCell(45).setCellValue("累计进货（拆中盒）");
-        rowField.createCell(46).setCellValue("累计销售");
-        rowField.createCell(47).setCellValue("累计销售（拆中盒）");
-        rowField.createCell(48).setCellValue("采购次数");
-        rowField.createCell(49).setCellValue("最后一次采购量");
-        rowField.createCell(50).setCellValue("最后一次采购量（拆中盒）");
-        rowField.createCell(51).setCellValue("最后一次采购时间");
-        rowField.createCell(52).setCellValue("未到货");
-        rowField.createCell(53).setCellValue("未到货（拆中盒）");
-        rowField.createCell(54).setCellValue("是否包含[赠品]");
+        rowField.createCell(46).setCellValue("近7天进货（拆中盒）");
+        rowField.createCell(47).setCellValue("累计销售");
+        rowField.createCell(48).setCellValue("累计销售（拆中盒）");
+        rowField.createCell(49).setCellValue("采购次数");
+        rowField.createCell(50).setCellValue("最后一次采购量");
+        rowField.createCell(51).setCellValue("最后一次采购量（拆中盒）");
+        rowField.createCell(52).setCellValue("最后一次采购时间");
+        rowField.createCell(53).setCellValue("未到货");
+        rowField.createCell(54).setCellValue("未到货（拆中盒）");
+        rowField.createCell(55).setCellValue("是否包含[赠品]");
 
         Date now = DateTime.now().toSqlDate();
 
         int middleBoxFlag, modelPack, qty, avbQty, qtySplit, avbQtySplit, matchFlag;
-        int qtyQuarter, qtyMonth, qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future;
-        int qtyQuarterSplit, qtyMonthSplit, qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit;
+        int qtyQuarter, qtyMonth, qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future, instock7;
+        int qtyQuarterSplit, qtyMonthSplit, qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit, instockSplit7;
         double cost, costWithTax;
         String productSource, materialName;
 
@@ -109,8 +110,7 @@ public class StockDetails implements ExcelSheet {
             qtySplit = qty;
             avbQtySplit = avbQty;
             Date saleDate = stockDetailResultSet.getDate("sale_date");
-
-            Timestamp lastBuyTime = stockDetailResultSet.getTimestamp("last_buy_time");
+            Date lastBuyTime = stockDetailResultSet.getDate("last_buy_time");
 
             qtyQuarter = stockDetailResultSet.getInt("qty_quarter");
             qtyMonth = stockDetailResultSet.getInt("qty_month");
@@ -120,6 +120,7 @@ public class StockDetails implements ExcelSheet {
             qtyWeek1 = stockDetailResultSet.getInt("qty_week1");
             totalSale = stockDetailResultSet.getInt("total_sale");
             totalInstock = stockDetailResultSet.getInt("instock");
+            instock7 = stockDetailResultSet.getInt("instock7");
             lastBuy = stockDetailResultSet.getInt("last_buy");
             future = stockDetailResultSet.getInt("future");
             matchFlag = stockDetailResultSet.getInt("match_flag");
@@ -135,6 +136,7 @@ public class StockDetails implements ExcelSheet {
             totalInstockSplit = totalInstock;
             lastBuySplit = lastBuy;
             futureSplit = future;
+            instockSplit7 = instock7;
             cost = stockDetailResultSet.getDouble("cost");
             costWithTax = cost * 1.13;
             if (middleBoxFlag == 1) {
@@ -150,6 +152,7 @@ public class StockDetails implements ExcelSheet {
                 totalInstockSplit *= modelPack;
                 lastBuySplit *= modelPack;
                 futureSplit *= modelPack;
+                instockSplit7 *= modelPack;
             }
             materialName = stockDetailResultSet.getString("material_name");
             row.createCell(0).setCellValue(stockDetailResultSet.getString("material_number"));
@@ -209,17 +212,20 @@ public class StockDetails implements ExcelSheet {
             row.createCell(43).setCellValue(Util.stockStatus(avbQty, qtyMonth, 30, saleDate, now));
             row.createCell(44).setCellValue(totalInstock);
             row.createCell(45).setCellValue(totalInstockSplit);
-            row.createCell(46).setCellValue(totalSale);
-            row.createCell(47).setCellValue(totalSaleSplit);
-            row.createCell(48).setCellValue(stockDetailResultSet.getInt("buy_times"));
-            row.createCell(49).setCellValue(lastBuy);
-            row.createCell(50).setCellValue(lastBuySplit);
+            row.createCell(46).setCellValue(instockSplit7);
+            row.createCell(47).setCellValue(totalSale);
+            row.createCell(48).setCellValue(totalSaleSplit);
+            row.createCell(49).setCellValue(stockDetailResultSet.getInt("buy_times"));
+            row.createCell(50).setCellValue(lastBuy);
+            row.createCell(51).setCellValue(lastBuySplit);
             if (lastBuyTime != null) {
-                row.createCell(51).setCellValue(DateTime.of(lastBuyTime).toString("yyyy-MM-dd HH:mm:ss"));
+                SXSSFCell cell = row.createCell(52);
+                cell.setCellStyle(dateCellStyle);
+                cell.setCellValue(lastBuyTime);
             }
-            row.createCell(52).setCellValue(future);
-            row.createCell(53).setCellValue(futureSplit);
-            row.createCell(54).setCellValue(materialName.contains("赠品"));
+            row.createCell(53).setCellValue(future);
+            row.createCell(54).setCellValue(futureSplit);
+            row.createCell(55).setCellValue(materialName.contains("赠品"));
             count++;
         }
         ps.close();
