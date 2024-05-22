@@ -67,6 +67,9 @@ public class AdsVs14 implements ExcelSheetBI {
 
             // Sheet名称
             sheet6.createRow(0).createCell(0).setCellValue(table);
+            for (int i = 0; i < 14; i++) {
+                selfMoss[i] = 0;
+            }
 
             while (resultSet5.next()) {
                 int rk1 = resultSet5.getInt("rk1");
@@ -119,23 +122,28 @@ public class AdsVs14 implements ExcelSheetBI {
                     days.add(resultSet5.getInt("day" + i));
                 }
 
-                // TODO  插入京东和拼多多
-                for (int i = 0; i < 14; i++) {
-                    selfMoss[i] = 0;
-                }
+
+                // TODO  抖音直播之前插入京东和拼多多
                 if (productSeries.equals("万能匣系列《流浪地球2》-550系列智能量子计算机") && businessLine.equals("直播-抖音店铺")) {
+
                     for (int i = 0; i < 2; i++) {
                         resultSetMoss.next();
 
                         SXSSFRow mossRoss = sheet6.createRow(count6);
                         mossRoss.createCell(1).setCellValue(group);
                         mossRoss.createCell(2).setCellValue(resultSetMoss.getString("business_line"));
+
+                        // TODO 京东拼多多业务线合计
                         int mossSum = 0;
                         for (int j = 0; j < maxDays; j++) {
                             mossRoss.createCell(j + startOffset).setCellValue(resultSetMoss.getInt("day" + (j + 1)));
                             mossSum += resultSetMoss.getInt("day" + (j + 1));
+
+                            // 每日自营合计
                             selfMoss[j] = selfMoss[j] + resultSetMoss.getInt("day" + (j + 1));
                         }
+
+                        // 合计
                         mossRoss.createCell(maxDays + startOffset).setCellValue(mossSum);
                         count6++;
                     }
@@ -197,8 +205,10 @@ public class AdsVs14 implements ExcelSheetBI {
                     cell.setCellStyle(midStyle);
                     cell.setCellValue("自营-合计");
                     for (int i = 0; i < maxDays; i++) {
-                        rowSheet6.createCell(i + startOffset).setCellValue(selfSum[i]);
-                        sefSumSum += selfSum[i];
+
+                        // TODO 合并京东拼多多
+                        rowSheet6.createCell(i + startOffset).setCellValue(selfSum[i] + selfMoss[i]);
+                        sefSumSum += (selfSum[i] + selfMoss[i]);
                     }
                     rowSheet6.createCell(maxDays + startOffset).setCellValue(sefSumSum);
                 }
@@ -221,13 +231,13 @@ public class AdsVs14 implements ExcelSheetBI {
                     }
                     rowSheet6.createCell(i + startOffset).setCellValue(dayNumber);
 
-                    // 自营合计求和
+                    // 自营-合计
                     if (!("批发".equals(businessLine))) {
-                        selfSum[i] = selfSum[i] + dayNumber + selfMoss[i];
+                        selfSum[i] = selfSum[i] + dayNumber;
                     }
 
                     // 业务线合计
-                    sum += (dayNumber + selfMoss[i]);
+                    sum += dayNumber;
                 }
                 rowSheet6.createCell(maxDays + startOffset).setCellValue(sum);
                 count6++;
