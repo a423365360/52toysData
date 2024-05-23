@@ -11,23 +11,15 @@ import java.util.List;
 
 public class SingleKingDeeAPI {
     public static void main(String[] args) throws Exception {
-        DateTime ss = DateTime.now();
         K3CloudApi client = new K3CloudApi();
-        String formId = "sal_outstock";
+        String formId = "BOS_BillType";
         int limit = 10000;
 
         String path = "D:\\meta\\" + formId + ".xls";
-        String fields = FieldsUtil.xls(path);
+//        String fields = FieldsUtil.xls(path);
+        String fields = "FNUMBER,FBillTypeID ";
         String[] fieldList = fields.split(",");
 //        HashMap<String, String> map = FieldsUtil.xlsMap(path);
-
-        // 标准采购单
-        String filter = "{\"Left\":\"(\"," +
-                "\"FieldName\":\"FBillTypeID\"," +
-                "\"Compare\":\"StatusEqualto\"," +
-                "\"Value\":\"83d822ca3e374b4ab01e5dd46a0062bd\"," +
-                "\"Right\":\")\"," +
-                "\"Logic\":\"and\"}";
 
         JSONObject jsonData = new JSONObject();
         jsonData.put("FormId", formId);
@@ -35,10 +27,16 @@ public class SingleKingDeeAPI {
         jsonData.put("TopRowCount", 0);
         jsonData.put("Limit", limit);
         jsonData.put("SubSystemId", "");
-        JSONArray jArray = new JSONArray();
 
-        String dayStart = "2024-03-01";
-        String dayEnd = "2024-03-02";
+        JSONArray jArray = new JSONArray();
+        String dayStart = "2024-05-01";
+        String dayEnd = "2024-05-10";
+        String filter = "{\"Left\":\"(\"," +
+                "\"FieldName\":\"Fnumber\"," +
+                "\"Compare\":\"=\"," +
+                "\"Value\":\"ZKysd\"," +
+                "\"Right\":\")\"," +
+                "\"Logic\":\"and\"}";
         String start = "{\"Left\":\"(\"," +
                 "\"FieldName\":\"FcreateDate\"," +
                 "\"Compare\":\">=\"," +
@@ -51,9 +49,10 @@ public class SingleKingDeeAPI {
                 "\"Value\":\"" + dayEnd + "T00:00:00.000\"," +
                 "\"Right\":\")\"," +
                 "\"Logic\":\"\"}";
-//        jArray.add(JSONObject.parse(filter));
-        jArray.add(JSONObject.parse(start));
-        jArray.add(JSONObject.parse(end));
+
+//        jArray.add(JSONObject.parse(start));
+//        jArray.add(JSONObject.parse(end));
+        jArray.add(JSONObject.parse(filter));
         jsonData.put("FilterString", jArray);
         jsonData.put("StartRow", 0);
 
@@ -81,8 +80,5 @@ public class SingleKingDeeAPI {
                 Assert.fail(e.getMessage());
             }
         }
-        DateTime ee = DateTime.now();
-        long between = ee.between(ss, DateUnit.MS);
-        System.out.println("计算时长" + between);
     }
 }

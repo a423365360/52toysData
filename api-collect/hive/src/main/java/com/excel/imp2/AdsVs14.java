@@ -56,7 +56,7 @@ public class AdsVs14 implements ExcelSheetBI {
             SXSSFSheet sheet6 = xssfWorkbook.createSheet(table);
             ResultSet resultSet5 = ps1.executeQuery();
             ResultSet resultSetMoss = ps3.executeQuery();
-            int count6 = 0, sameFlag1 = -1, sameFlag2 = -1, sameGraphFlag1 = -1, sum, firstDayNumber, productLineCount = 0, sefSumSum = 0;
+            int count6 = 0, sameFlag1 = -1, sameFlag2 = -1, sameGraphFlag1 = -1, sum, firstDayNumber, productLineCount = 0, sefSumSum = 0, sumUnit;
             int[] selfSum = new int[14];
             int[] selfMoss = new int[14];
             ArrayList<SXSSFRow> rows = new ArrayList<>();
@@ -209,8 +209,13 @@ public class AdsVs14 implements ExcelSheetBI {
                     for (int i = 0; i < maxDays; i++) {
 
                         // TODO 合并京东拼多多
-                        rowSheet6.createCell(i + startOffset).setCellValue(selfSum[i] + selfMoss[i]);
-                        sefSumSum += (selfSum[i] + selfMoss[i]);
+                        if (productSeries.equals("万能匣系列《流浪地球2》-550系列智能量子计算机")) {
+                            sumUnit = selfSum[i] + selfMoss[i];
+                        } else {
+                            sumUnit = selfSum[i];
+                        }
+                        rowSheet6.createCell(i + startOffset).setCellValue(sumUnit);
+                        sefSumSum += sumUnit;
                     }
                     rowSheet6.createCell(maxDays + startOffset).setCellValue(sefSumSum);
                 }
