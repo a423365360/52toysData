@@ -91,6 +91,7 @@ public class StockDetails implements ExcelSheet {
         rowField.createCell(53).setCellValue("未到货");
         rowField.createCell(54).setCellValue("未到货（拆中盒）");
         rowField.createCell(55).setCellValue("是否包含[赠品]");
+        rowField.createCell(56).setCellValue("近30天销售额");
 
         Date now = DateTime.now().toSqlDate();
 
@@ -226,6 +227,7 @@ public class StockDetails implements ExcelSheet {
             row.createCell(53).setCellValue(future);
             row.createCell(54).setCellValue(futureSplit);
             row.createCell(55).setCellValue(materialName.contains("赠品"));
+            row.createCell(56).setCellValue(stockDetailResultSet.getDouble("sale30"));
             count++;
         }
         ps.close();

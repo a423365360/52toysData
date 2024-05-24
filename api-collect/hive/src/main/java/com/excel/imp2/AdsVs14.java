@@ -249,7 +249,8 @@ public class AdsVs14 implements ExcelSheetBI {
                 rowSheet6.createCell(maxDays + startOffset).setCellValue(sum);
                 count6++;
 
-                // 筛选id 排除批发  分sheet展示
+
+                // 筛选id 排除批发 分sheet展示
                 if (id > 5 || onoff == 0) {
                     continue;
                 }
