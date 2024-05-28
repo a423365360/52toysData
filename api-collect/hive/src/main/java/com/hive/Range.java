@@ -95,12 +95,12 @@ public class Range {
             } else if (flag == 2) {
 
                 if (tableName.equals("guanyi_details")) {
-                    materialIdField = "xproduct_item_code";
+                    materialIdField = "xproduct_item_name";
                     queryProductSeries = queryProductSeries + "INSERT OVERWRITE TABLE " + DATABASE + ".dwc_" + tableName +
                             " PARTITION(part='" + part + "') SELECT * FROM " + DATABASE + ".dwd_" + tableName +
                             " WHERE dt >= '" + dateOnLine1 + "' AND dt < '" + dateOnLine2 + "' AND " + materialIdField + " = '" + productSeries + "';";
                 } else {
-                    materialIdField = "material_id_number";
+                    materialIdField = "material_name";
                     queryProductSeries = queryProductSeries + "INSERT OVERWRITE TABLE " + DATABASE + ".dwc_" + tableName +
                             " PARTITION(part='" + part + "') SELECT * FROM " + DATABASE + ".dwd_" + tableName +
                             " WHERE ((dt >= '" + dateOnLine1 + "' AND dt < '" + dateOnLine2 + "') OR (dt >= '" + dateOffLine1 + "' AND dt < '" + dateOffLine2 + "')) AND " +
