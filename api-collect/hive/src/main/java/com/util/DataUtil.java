@@ -158,6 +158,14 @@ public class DataUtil {
         } catch (Exception e) {
         }
 
+        // TODO 油菜花-门店
+        String youcaihuaBusinessSql = "SELECT * FROM ads_youcaihua_business WHERE dt='" + dt + "'";
+        AdsYoucaihuaBusiness youcaihuaBusiness = new AdsYoucaihuaBusiness(xssfWorkbook, hiveConnection);
+        try {
+            youcaihuaBusiness.setSheet("娃娃机-门店", youcaihuaBusinessSql, youcaihuaSql2, yesterday);
+        } catch (Exception e) {
+        }
+
         FileOutputStream fileOutputStream = new FileOutputStream(path);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
         xssfWorkbook.write(bufferedOutputStream);
