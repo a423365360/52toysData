@@ -36,6 +36,10 @@ public class AdsYoucaihuaBusiness {
         // 获取当月第一天
         String month1 = DateUtil.dateNew(yesterday).toDateStr().substring(0, 7) + "-01";
         int dayMax = yesterday.dayOfMonth();
+        double[] sum1 = new double[dayMax];
+        double[] sum2 = new double[dayMax];
+        double[] sum3 = new double[dayMax];
+        double[] sum4 = new double[dayMax];
 
         // 预编译sql
         PreparedStatement ps1 = hiveConnection.prepareStatement(sql1);
@@ -93,17 +97,41 @@ public class AdsYoucaihuaBusiness {
             for (int i = 0; i < dayMax; i++) {
                 for (YoucaihuaBusiness unit : arrayList) {
                     try {
-                        if (branch.equals(unit.getBusinessName()) && (i == unit.getDay())) {
-                            row1.createCell(i).setCellValue(unit.getInCome());
-                            row2.createCell(i).setCellValue(unit.getInCoin());
-                            row3.createCell(i).setCellValue(unit.getConsumeCoin());
-                            row4.createCell(i).setCellValue(unit.getGift());
+                        if (branch.equals(unit.getBusinessName()) && ((i + 1) == unit.getDay())) {
+                            double inCome = unit.getInCome();
+                            double inCoin = unit.getInCoin();
+                            double consumeCoin = unit.getConsumeCoin();
+                            double gift = unit.getGift();
+                            row1.createCell(i + 2).setCellValue(inCome);
+                            row2.createCell(i + 2).setCellValue(inCoin);
+                            row3.createCell(i + 2).setCellValue(consumeCoin);
+                            row4.createCell(i + 2).setCellValue(gift);
+                            sum1[i] += inCome;
+                            sum2[i] += inCoin;
+                            sum3[i] += consumeCoin;
+                            sum4[i] += gift;
                         }
                     } catch (Exception e) {
                         System.out.println("Error row");
                     }
                 }
             }
+        }
+
+        SXSSFRow totalRow1 = sheet.createRow(row++);
+        SXSSFRow totalRow2 = sheet.createRow(row++);
+        SXSSFRow totalRow3 = sheet.createRow(row++);
+        SXSSFRow totalRow4 = sheet.createRow(row);
+        totalRow1.createCell(0).setCellValue("合计");
+        totalRow1.createCell(1).setCellValue("收入金额");
+        totalRow2.createCell(1).setCellValue("充币数");
+        totalRow3.createCell(1).setCellValue("消耗币数");
+        totalRow4.createCell(1).setCellValue("出礼品数");
+        for (int i = 0; i < dayMax; i++) {
+            totalRow1.createCell(i + 2).setCellValue(sum1[i]);
+            totalRow2.createCell(i + 2).setCellValue(sum2[i]);
+            totalRow3.createCell(i + 2).setCellValue(sum3[i]);
+            totalRow4.createCell(i + 2).setCellValue(sum4[i]);
         }
 
         ps1.close();

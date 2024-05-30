@@ -8,10 +8,10 @@ import com.constant.ReportType;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
+import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
 import java.util.Properties;
@@ -25,6 +25,7 @@ public class MailUtil {
     private static final String MAIL_USERNAME = "daishanhong@52toys.com";
     private static final String MAIL_PASSWORD = "eCSRrUsuuN7WyFAy";
     private static final String MAIL_PROTOCOL = "smtp";
+    private static final int CHUNK_SIZE = 1024 * 1024; // 1 MB chunk size
 
     public static void sendMail(Session session, String mailTo, HashSet<ReportBean> files, String mailFlag) throws MessagingException, UnsupportedEncodingException {
         if (mailFlag == null || "".equals(mailFlag)) {
@@ -54,7 +55,8 @@ public class MailUtil {
 
         for (ReportBean file : files) {
             MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(file.getFilePath())));
+//            messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(file.getFilePath())));
+            messageBodyPart.setDataHandler(new DataHandler(new ChunkedFileDataSource(file.getFilePath())));
 
             String fileName = "default.csv";
             if (ReportType.DAY == file.getReportType()) {
@@ -129,4 +131,87 @@ public class MailUtil {
             return null;
         }
     }
+
+    // Custom DataSource implementation to handle chunked file transfer
+    static class ChunkedFileDataSource implements DataSource {
+
+        private final String filePath;
+
+        public ChunkedFileDataSource(String filePath) {
+            this.filePath = filePath;
+        }
+
+        @Override
+        public String getContentType() {
+            return "application/octet-stream";
+        }
+
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        public InputStream getInputStream() throws IOException {
+            return new ChunkedInputStream(filePath);
+        }
+
+        @Override
+        public OutputStream getOutputStream() throws IOException {
+            return null;
+        }
+    }
+
+    // Custom InputStream implementation to read file in chunks
+    static class ChunkedInputStream extends InputStream {
+
+        private final String filePath;
+        private final byte[] buffer;
+        private long remainingBytes;
+        private FileInputStream fileInputStream;
+
+        public ChunkedInputStream(String filePath) throws IOException {
+            this.filePath = filePath;
+            this.buffer = new byte[CHUNK_SIZE];
+            this.remainingBytes = new java.io.File(filePath).length();
+            this.fileInputStream = new FileInputStream(filePath);
+        }
+
+        @Override
+        public int read() throws IOException {
+            if (remainingBytes == 0) {
+                return -1;
+            }
+
+            int bytesRead = fileInputStream.read(buffer);
+            if (bytesRead == -1) {
+                return -1;
+            }
+
+            remainingBytes -= bytesRead;
+            return bytesRead;
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException {
+            if (remainingBytes == 0) {
+                return -1;
+            }
+
+            int bytesToRead = Math.min(len, (int) remainingBytes);
+            int bytesRead = fileInputStream.read(b, off, bytesToRead);
+            if (bytesRead == -1) {
+                return -1;
+            }
+
+            remainingBytes -= bytesRead;
+            return bytesRead;
+        }
+
+        @Override
+        public void close() throws IOException {
+            fileInputStream.close();
+        }
+    }
 }
+
