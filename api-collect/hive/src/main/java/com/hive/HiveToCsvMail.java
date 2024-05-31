@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class HiveToCsvMail {
@@ -44,7 +47,7 @@ public class HiveToCsvMail {
             }
 
             // 获取结果
-            Session session = MailUtil.getSession();
+//            Session session = MailUtil.getSession();
             HashSet files = new HashSet<ReportBean>();
 
             switch (mailFlag) {
@@ -96,9 +99,34 @@ public class HiveToCsvMail {
                 return;
             }
 
+            // 并发报表
+            ExecutorService pool = Executors.newFixedThreadPool(3);
+            CountDownLatch latch = new CountDownLatch(addressSet.size());
             for (String mailTo : addressSet) {
-                MailUtil.sendMail(session, mailTo, files, mailFlag);
+                pool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Session session = MailUtil.getSession();
+                            MailUtil.sendMail(session, mailTo, files, mailFlag);
+                            latch.countDown(); // Decrement the latch counter once the email is sent
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
             }
+
+            // Wait for all email sending tasks to complete before terminating the main thread
+            try {
+                latch.await(); // Block the main thread until the latch count reaches zero
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                pool.shutdown(); // Gracefully shut down the thread pool
+            }
+
+            System.out.println("Main thread exiting");
 
         } catch (Exception e) {
         }
