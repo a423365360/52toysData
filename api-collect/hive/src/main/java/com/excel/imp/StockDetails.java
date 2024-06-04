@@ -92,12 +92,13 @@ public class StockDetails implements ExcelSheet {
         rowField.createCell(54).setCellValue("未到货（拆中盒）");
         rowField.createCell(55).setCellValue("是否包含[赠品]");
         rowField.createCell(56).setCellValue("近30天销售额");
+        rowField.createCell(57).setCellValue("近60天销量（拆中盒）");
 
         Date now = DateTime.now().toSqlDate();
 
         int middleBoxFlag, modelPack, qty, avbQty, qtySplit, avbQtySplit, matchFlag;
-        int qtyQuarter, qtyMonth, qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future, instock7;
-        int qtyQuarterSplit, qtyMonthSplit, qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit, instockSplit7;
+        int qtyQuarter, qtyMonth, qty2Month, qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future, instock7;
+        int qtyQuarterSplit, qtyMonthSplit, qty2MonthSplit, qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit, instockSplit7;
         double cost, costWithTax;
         String productSource, materialName;
 
@@ -115,6 +116,7 @@ public class StockDetails implements ExcelSheet {
 
             qtyQuarter = stockDetailResultSet.getInt("qty_quarter");
             qtyMonth = stockDetailResultSet.getInt("qty_month");
+            qty2Month = stockDetailResultSet.getInt("qty_2month");
             qtyWeek4 = stockDetailResultSet.getInt("qty_week4");
             qtyWeek3 = stockDetailResultSet.getInt("qty_week3");
             qtyWeek2 = stockDetailResultSet.getInt("qty_week2");
@@ -129,6 +131,7 @@ public class StockDetails implements ExcelSheet {
 
             qtyQuarterSplit = qtyQuarter;
             qtyMonthSplit = qtyMonth;
+            qty2MonthSplit = qty2Month;
             qtyWeekSplit1 = qtyWeek1;
             qtyWeekSplit2 = qtyWeek2;
             qtyWeekSplit3 = qtyWeek3;
@@ -154,6 +157,7 @@ public class StockDetails implements ExcelSheet {
                 lastBuySplit *= modelPack;
                 futureSplit *= modelPack;
                 instockSplit7 *= modelPack;
+                qty2MonthSplit *= modelPack;
             }
             materialName = stockDetailResultSet.getString("material_name");
             row.createCell(0).setCellValue(stockDetailResultSet.getString("material_number"));
@@ -228,6 +232,7 @@ public class StockDetails implements ExcelSheet {
             row.createCell(54).setCellValue(futureSplit);
             row.createCell(55).setCellValue(materialName.contains("赠品"));
             row.createCell(56).setCellValue(stockDetailResultSet.getDouble("sale30"));
+            row.createCell(57).setCellValue(qty2MonthSplit);
             count++;
         }
         ps.close();
