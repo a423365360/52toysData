@@ -20,7 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DataUtil {
-    public static ReportBean getDayReport(Connection hiveConnection, String endDayInput, String testFlag, int sign) throws Exception {
+    public static ReportBean getDayReport(Connection hiveConnection, Connection reportConnect, String endDayInput, String testFlag, int sign) throws Exception {
         SXSSFWorkbook xssfWorkbook = new SXSSFWorkbook(1000);
 
         String endDay = endDayInput;

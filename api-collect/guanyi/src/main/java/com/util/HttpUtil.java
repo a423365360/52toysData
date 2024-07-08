@@ -26,6 +26,9 @@ public class HttpUtil {
         try (CloseableHttpClient httpclient = HttpClients.createDefault();
              CloseableHttpResponse httpresponse = httpclient.execute(httppost)) {
             String response = EntityUtils.toString(httpresponse.getEntity());
+
+            System.out.println(response);
+
             JSONObject jsonObject = JSONObject.parseObject(response);
             return jsonObject.getIntValue("total");
         } catch (Exception var11) {
@@ -52,6 +55,42 @@ public class HttpUtil {
         } catch (Exception e) {
         }
         return billNumberList;
+    }
+
+    public static ArrayList<String> getItemList(String url, String data) throws Exception {
+        ArrayList<String> billNumberList = new ArrayList<>();
+        HttpPost httppost = new HttpPost(url);
+        StringEntity stringentity = new StringEntity(URLEncoder.encode(data, "utf-8"), ContentType.create("text/json", "UTF-8"));
+        httppost.setEntity(stringentity);
+        try (CloseableHttpClient httpclient = HttpClients.createDefault();
+             CloseableHttpResponse httpresponse = httpclient.execute(httppost)) {
+            String response = EntityUtils.toString(httpresponse.getEntity());
+            JSONObject jsonObject = JSONObject.parseObject(response);
+            JSONArray orders = jsonObject.getJSONArray("items");
+            for (int i = 0; i < orders.size(); i++) {
+                JSONObject order = orders.getJSONObject(i);
+                String billNumber = order.getString("code");
+                billNumberList.add(billNumber);
+            }
+        } catch (Exception e) {
+        }
+        return billNumberList;
+    }
+
+    public static void getGuanyiData1(String url, String data, String filePath) throws Exception {
+        HttpPost httppost = new HttpPost(url);
+        StringEntity stringentity = new StringEntity(URLEncoder.encode(data, "utf-8"), ContentType.create("text/json", "UTF-8"));
+        httppost.setEntity(stringentity);
+        try (CloseableHttpClient httpclient = HttpClients.createDefault();
+             CloseableHttpResponse httpresponse = httpclient.execute(httppost);
+             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath, true), "utf-8"))) {
+            String response = EntityUtils.toString(httpresponse.getEntity());
+
+            System.out.println(response);
+
+//            JSONObject resultJson = JSONObject.parseObject(response);
+        } catch (Exception e) {
+        }
     }
 
     public static void getGuanyiData(String url, String data, String filePath) throws Exception {

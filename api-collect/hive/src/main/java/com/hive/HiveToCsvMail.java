@@ -19,7 +19,8 @@ import java.util.concurrent.Executors;
 
 public class HiveToCsvMail {
     private static final String DATABASE = "kingdee";
-    private static final String MYSQL_DATABASE = "mail";
+    private static final String MAIL_DATABASE = "mail";
+    private static final String REPORT_DATABASE = "product";
     private static final String EMAIL_ADDRESS_QUERY_SQL = "SELECT address FROM mail.email_address WHERE is_effective = 1";
 
     public static void main(String[] args) throws Exception {
@@ -35,9 +36,10 @@ public class HiveToCsvMail {
             endDay = dt;
         }
 
-        try (Connection mysqlConnection = ConnectUtil.getMySQLConnection(MYSQL_DATABASE, testFlag);
+        try (Connection mailConnection = ConnectUtil.getMySQLConnection(MAIL_DATABASE, testFlag);
+             Connection reportConnection = ConnectUtil.getMySQLConnection(REPORT_DATABASE, testFlag);
              Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-             PreparedStatement addrssSQL = mysqlConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
+             PreparedStatement addrssSQL = mailConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
 
             // 邮箱地址
             ResultSet addrssResultSet = addrssSQL.executeQuery();
@@ -53,12 +55,13 @@ public class HiveToCsvMail {
             switch (mailFlag) {
                 case "report":
                     // 营业日报
-                    files.add(DataUtil.getDayReport(hiveConnection, endDay, testFlag, ReportType.ADS_DAY));
+                    files.add(DataUtil.getDayReport(hiveConnection,reportConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     if ("0".equals(testFlag)) {
-                        mysqlConnection.close();
+                        mailConnection.close();
                         hiveConnection.close();
                         addrssSQL.close();
+                        reportConnection.close();
                         return;
                     }
 
@@ -85,17 +88,19 @@ public class HiveToCsvMail {
                     files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK));
                     break;
                 default:
-                    mysqlConnection.close();
+                    mailConnection.close();
                     hiveConnection.close();
                     addrssSQL.close();
+                    reportConnection.close();
                     return;
             }
 
             // 发送附件
             if ("0".equals(testFlag)) {
-                mysqlConnection.close();
+                mailConnection.close();
                 hiveConnection.close();
                 addrssSQL.close();
+                reportConnection.close();
                 return;
             }
 
