@@ -454,9 +454,9 @@ public class DataUtil {
     public static ReportBean getStock(Connection hiveConnection, String endDayInput, String testFlag, int sign) throws Exception {
         SXSSFWorkbook xssfWorkbook = new SXSSFWorkbook(1000);
 
-        String path = "/datadisk/javalog/dws/DayReport_" + endDayInput + "_" + sign + DateTime.now().getTime() + ".xlsx";
+        String path = "/datadisk/javalog/dws/DayReport_" + endDayInput + "_" + sign + "_" + DateTime.now().getTime() + ".xlsx";
         if ("0".equals(testFlag)) {
-            path = "D:\\test\\DayReport_" + endDayInput + "_" + sign + DateTime.now().getTime() + ".xlsx";
+            path = "D:\\test\\DayReport_" + endDayInput + "_" + sign + "_" + DateTime.now().getTime() + ".xlsx";
         }
 
         String stockProductSourceSql =
@@ -501,43 +501,47 @@ public class DataUtil {
         String stockDetailSql =
                 "SELECT * FROM ads_stock WHERE dt ='" + endDayInput + "'";
 
-        // 仓库详情
-        StockDetails stockDetails = new StockDetails(xssfWorkbook, hiveConnection);
-        stockDetails.setSheet("即时库存详情", stockDetailSql);
+        if (sign == ReportType.STOCK_DETAIL) {
+            // 仓库详情
+            StockDetails stockDetails = new StockDetails(xssfWorkbook, hiveConnection);
+            stockDetails.setSheet("即时库存详情", stockDetailSql);
+        }
 
-        // 产品系列
-        StockProductSeries stockProductSeries = new StockProductSeries(xssfWorkbook, hiveConnection);
-        stockProductSeries.setSheet("产品系列汇总", stockProductSeriesSql);
-        stockProductSeries.setSheet("产品系列汇总（混装）", stockProductSeriesHunSql);
-        stockProductSeries.setSheet("产品系列汇总（可用）", stockProductSeriesUseSql);
+        if (sign == ReportType.STOCK_CAL) {
+            // 产品系列
+            StockProductSeries stockProductSeries = new StockProductSeries(xssfWorkbook, hiveConnection);
+            stockProductSeries.setSheet("产品系列汇总", stockProductSeriesSql);
+            stockProductSeries.setSheet("产品系列汇总（混装）", stockProductSeriesHunSql);
+            stockProductSeries.setSheet("产品系列汇总（可用）", stockProductSeriesUseSql);
 
-        // 产品系列渠道
-        StockProductSeriesChannel stockProductSeriesChannel = new StockProductSeriesChannel(xssfWorkbook, hiveConnection);
-        stockProductSeriesChannel.setSheet("产品系列渠道汇总", stockProductSeriesChannelSql);
-        stockProductSeriesChannel.setSheet("产品系列渠道汇总（混装）", stockProductSeriesChannelHunSql);
-        stockProductSeriesChannel.setSheet("产品系列渠道汇总（可用）", stockProductSeriesChanneUselSql);
+            // 产品系列渠道
+            StockProductSeriesChannel stockProductSeriesChannel = new StockProductSeriesChannel(xssfWorkbook, hiveConnection);
+            stockProductSeriesChannel.setSheet("产品系列渠道汇总", stockProductSeriesChannelSql);
+            stockProductSeriesChannel.setSheet("产品系列渠道汇总（混装）", stockProductSeriesChannelHunSql);
+            stockProductSeriesChannel.setSheet("产品系列渠道汇总（可用）", stockProductSeriesChanneUselSql);
 
-        //产品来源
-        StockProductSource stockProductSource = new StockProductSource(xssfWorkbook, hiveConnection);
-        stockProductSource.setSheet("产品来源", stockProductSourceSql);
+            //产品来源
+            StockProductSource stockProductSource = new StockProductSource(xssfWorkbook, hiveConnection);
+            stockProductSource.setSheet("产品来源", stockProductSourceSql);
 
-        // 产品线
-        StockProductLine stockProductLine = new StockProductLine(xssfWorkbook, hiveConnection);
-        stockProductLine.setSheet("产品线", stockProductLineSql);
-        stockProductLine.setSheet("产品线（自主研发）", stockProductLineZzSql);
-        stockProductLine.setSheet("产品线（外部采购）", stockProductLineWcSql);
+            // 产品线
+            StockProductLine stockProductLine = new StockProductLine(xssfWorkbook, hiveConnection);
+            stockProductLine.setSheet("产品线", stockProductLineSql);
+            stockProductLine.setSheet("产品线（自主研发）", stockProductLineZzSql);
+            stockProductLine.setSheet("产品线（外部采购）", stockProductLineWcSql);
 
-        // IP细分
-        StockProductIPSub stockProductIPSub = new StockProductIPSub(xssfWorkbook, hiveConnection);
-        stockProductIPSub.setSheet("IP细分", stockIPSubSql);
+            // IP细分
+            StockProductIPSub stockProductIPSub = new StockProductIPSub(xssfWorkbook, hiveConnection);
+            stockProductIPSub.setSheet("IP细分", stockIPSubSql);
 
-        // 物料渠道
-        StockMaterialChannel stockMaterialChannel = new StockMaterialChannel(xssfWorkbook, hiveConnection);
-        stockMaterialChannel.setSheet("物料渠道", stockMaterialChannelSql);
+            // 物料渠道
+            StockMaterialChannel stockMaterialChannel = new StockMaterialChannel(xssfWorkbook, hiveConnection);
+            stockMaterialChannel.setSheet("物料渠道", stockMaterialChannelSql);
 
-        // 仓库分组
-        StockMaterialGroup stockMaterialGroup = new StockMaterialGroup(xssfWorkbook, hiveConnection);
-        stockMaterialGroup.setSheet("物料仓库分组", stockMaterialGroupSql);
+            // 仓库分组
+            StockMaterialGroup stockMaterialGroup = new StockMaterialGroup(xssfWorkbook, hiveConnection);
+            stockMaterialGroup.setSheet("物料仓库分组", stockMaterialGroupSql);
+        }
 
         FileOutputStream fileOutputStream = new FileOutputStream(path);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);

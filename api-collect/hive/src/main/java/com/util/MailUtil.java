@@ -9,6 +9,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.*;
@@ -40,6 +41,12 @@ public class MailUtil {
                 break;
             case "stock":
                 mailName = "库存数据";
+                break;
+            case "stock1":
+                mailName = "库存数据（详情明细）";
+                break;
+            case "stock2":
+                mailName = "库存数据（聚合统计）";
                 break;
             default:
                 return;
@@ -81,9 +88,13 @@ public class MailUtil {
 //                String dateString2 = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
 //                fileName = "金蝶月营业数据-" + dateString1 + "-" + dateString2 + ".xlsx";
 //            }
-            if (ReportType.STOCK == file.getReportType()) {
+            if (ReportType.STOCK_DETAIL == file.getReportType()) {
                 String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
-                fileName = "即时库存-" + dateString + ".xlsx";
+                fileName = "即时库存（详情明细）-" + dateString + ".xlsx";
+            }
+            if (ReportType.STOCK_CAL == file.getReportType()) {
+                String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");
+                fileName = "即时库存（聚合统计）-" + dateString + ".xlsx";
             }
             if (ReportType.WEEK_REPORT == file.getReportType()) {
                 String dateString = DateUtil.format(DateUtil.parse(file.getDt(), "yyyy-MM-dd"), "yyyy年M月d日");

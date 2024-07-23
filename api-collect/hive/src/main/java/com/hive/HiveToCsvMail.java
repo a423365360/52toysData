@@ -49,21 +49,12 @@ public class HiveToCsvMail {
             }
 
             // 获取结果
-//            Session session = MailUtil.getSession();
             HashSet files = new HashSet<ReportBean>();
 
             switch (mailFlag) {
                 case "report":
                     // 营业日报
-                    files.add(DataUtil.getDayReport(hiveConnection,reportConnection, endDay, testFlag, ReportType.ADS_DAY));
-
-                    if ("0".equals(testFlag)) {
-                        mailConnection.close();
-                        hiveConnection.close();
-                        addrssSQL.close();
-                        reportConnection.close();
-                        return;
-                    }
+                    files.add(DataUtil.getDayReport(hiveConnection, reportConnection, endDay, testFlag, ReportType.ADS_DAY));
 
                     // 管易详情数据
                     files.add(DataUtil.getGuanyi(hiveConnection, endDay, testFlag, ReportType.GUANYI));
@@ -83,10 +74,15 @@ public class HiveToCsvMail {
                     //        }
 
                     break;
-                case "stock":
+                case "stock1":
                     // 即时库存
-                    files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK));
+                    files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK_DETAIL));
                     break;
+
+                case "stock2":
+                    files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK_CAL));
+                    break;
+
                 default:
                     mailConnection.close();
                     hiveConnection.close();
@@ -95,43 +91,52 @@ public class HiveToCsvMail {
                     return;
             }
 
+            // TODO TEST
+//            if ("0".equals(testFlag)) {
+//                mailConnection.close();
+//                hiveConnection.close();
+//                addrssSQL.close();
+//                reportConnection.close();
+//                return;
+//            }
+
             // 发送附件
-            if ("0".equals(testFlag)) {
-                mailConnection.close();
-                hiveConnection.close();
-                addrssSQL.close();
-                reportConnection.close();
-                return;
-            }
-
-            // 并发报表
-            ExecutorService pool = Executors.newFixedThreadPool(3);
-            CountDownLatch latch = new CountDownLatch(addressSet.size());
             for (String mailTo : addressSet) {
-                pool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Session session = MailUtil.getSession();
-                            MailUtil.sendMail(session, mailTo, files, mailFlag);
-                            latch.countDown(); // Decrement the latch counter once the email is sent
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
+                try {
+                    Session session = MailUtil.getSession();
+                    MailUtil.sendMail(session, mailTo, files, mailFlag);
+                } catch (Exception e) {
+                }
             }
 
-            // Wait for all email sending tasks to complete before terminating the main thread
-            try {
-                latch.await(); // Block the main thread until the latch count reaches zero
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                pool.shutdown(); // Gracefully shut down the thread pool
-            }
-
-            System.out.println("Main thread exiting");
+//            // TODO 并发报表
+//            ExecutorService pool = Executors.newFixedThreadPool(3);
+//            CountDownLatch latch = new CountDownLatch(addressSet.size());
+//            for (String mailTo : addressSet) {
+//                pool.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Session session = MailUtil.getSession();
+//                            MailUtil.sendMail(session, mailTo, files, mailFlag);
+//                            latch.countDown(); // Decrement the latch counter once the email is sent
+//                        } catch (Exception e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//                });
+//            }
+//
+//            // Wait for all email sending tasks to complete before terminating the main thread
+//            try {
+//                latch.await(); // Block the main thread until the latch count reaches zero
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } finally {
+//                pool.shutdown(); // Gracefully shut down the thread pool
+//            }
+//
+//            System.out.println("Main thread exiting");
 
         } catch (Exception e) {
         }

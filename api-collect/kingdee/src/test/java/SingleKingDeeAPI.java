@@ -12,12 +12,12 @@ import java.util.List;
 public class SingleKingDeeAPI {
     public static void main(String[] args) throws Exception {
         K3CloudApi client = new K3CloudApi();
-        String formId = "BOS_BillType";
-        int limit = 10000;
+        String formId = "sal_outstock";
+        int limit = 20;
 
         String path = "D:\\meta\\" + formId + ".xls";
 //        String fields = FieldsUtil.xls(path);
-        String fields = "FNUMBER,FBillTypeID ";
+        String fields = "FID";
         String[] fieldList = fields.split(",");
 //        HashMap<String, String> map = FieldsUtil.xlsMap(path);
 
@@ -52,9 +52,9 @@ public class SingleKingDeeAPI {
 
 //        jArray.add(JSONObject.parse(start));
 //        jArray.add(JSONObject.parse(end));
-        jArray.add(JSONObject.parse(filter));
-        jsonData.put("FilterString", jArray);
-        jsonData.put("StartRow", 0);
+//        jArray.add(JSONObject.parse(filter));
+//        jsonData.put("FilterString", jArray);
+//        jsonData.put("StartRow", 0);
 
         while (true) {
             try {
