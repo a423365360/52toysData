@@ -334,7 +334,7 @@ public class CollectUtil {
 
     public static JSONArray getJA(String dayStart, String dayEnd, String type) {
         JSONArray jArray = new JSONArray();
-        String fieldName = "", billType = "", open = "", cutTime = "", orgUse = "", isEnable = "";
+        String fieldName = "", billType = "", open = "", cutTime = "", orgUse = "", orgUse1 = "",isEnable = "";
         switch (type) {
             case "create":
                 fieldName = "FCREATEDATE";
@@ -347,21 +347,28 @@ public class CollectUtil {
                 break;
             case "modify":
                 fieldName = "FModifyDate";
-                orgUse = "{\"Left\":\"(\"," +
-                        "\"FieldName\":\"FUseOrgId.FNumber\"," +
-                        "\"Compare\":\"=\"," +
-                        "\"Value\":\"10000\"," +
-                        "\"Right\":\")\"," +
-                        "\"Logic\":\"and\"}";
-                jArray.add(JSONObject.parse(orgUse));
+//                orgUse = "{\"Left\":\"(\"," +
+//                        "\"FieldName\":\"FUseOrgId.FNumber\"," +
+//                        "\"Compare\":\"=\"," +
+//                        "\"Value\":\"10000\"," +
+//                        "\"Right\":\")\"," +
+//                        "\"Logic\":\"and\"}";
+//                jArray.add(JSONObject.parse(orgUse));
                 break;
             case "modify0":
                 fieldName = "FModifyDate";
-                orgUse = "{\"Left\":\"(\"," +
+                orgUse = "{\"Left\":\"((\"," +
                         "\"FieldName\":\"FUseOrgId.FNumber\"," +
                         "\"Compare\":\"=\"," +
                         "\"Value\":\"10000\"," +
                         "\"Right\":\")\"," +
+                        "\"Logic\":\"or\"}";
+                // 致物盛源独有物料
+                orgUse1 = "{\"Left\":\"(\"," +
+                        "\"FieldName\":\"FUseOrgId.FNumber\"," +
+                        "\"Compare\":\"=\"," +
+                        "\"Value\":\"50001\"," +
+                        "\"Right\":\"))\"," +
                         "\"Logic\":\"and\"}";
                 isEnable = "{\"Left\":\"(\"," +
                         "\"FieldName\":\"FIsEnable\"," +
@@ -370,6 +377,7 @@ public class CollectUtil {
                         "\"Right\":\")\"," +
                         "\"Logic\":\"and\"}";
                 jArray.add(JSONObject.parse(orgUse));
+                jArray.add(JSONObject.parse(orgUse1));
                 jArray.add(JSONObject.parse(isEnable));
                 break;
             case "pur":

@@ -12,14 +12,15 @@ import java.util.List;
 public class SingleKingDeeAPI {
     public static void main(String[] args) throws Exception {
         K3CloudApi client = new K3CloudApi();
-        String formId = "sal_outstock";
-        int limit = 20;
+        String formId = "bd_stock";
+//        String formId = "sal_outstock";
+        int limit = 500;
 
         String path = "D:\\meta\\" + formId + ".xls";
 //        String fields = FieldsUtil.xls(path);
-        String fields = "FID";
+        String fields = "FNumber,FModifyDate,FCreateDate";
         String[] fieldList = fields.split(",");
-//        HashMap<String, String> map = FieldsUtil.xlsMap(path);
+        HashMap<String, String> map = FieldsUtil.xlsMap(path);
 
         JSONObject jsonData = new JSONObject();
         jsonData.put("FormId", formId);
@@ -29,37 +30,43 @@ public class SingleKingDeeAPI {
         jsonData.put("SubSystemId", "");
 
         JSONArray jArray = new JSONArray();
-        String dayStart = "2024-05-01";
-        String dayEnd = "2024-05-10";
-        String filter = "{\"Left\":\"(\"," +
-                "\"FieldName\":\"Fnumber\"," +
+        String dayStart = "2024-05-11";
+        String dayEnd = "2024-05-12";
+        String filter = "{\"Left\":\"((\"," +
+                "\"FieldName\":\"FNumber\"," +
                 "\"Compare\":\"=\"," +
-                "\"Value\":\"ZKysd\"," +
+                "\"Value\": \"LZ-JT068\"," +
                 "\"Right\":\")\"," +
+                "\"Logic\":\"or\"}";
+        String filter1 = "{\"Left\":\"(\"," +
+                "\"FieldName\":\"FNumber\"," +
+                "\"Compare\":\"=\"," +
+                "\"Value\": \"JTCX019\"," +
+                "\"Right\":\"))\"," +
                 "\"Logic\":\"and\"}";
         String start = "{\"Left\":\"(\"," +
-                "\"FieldName\":\"FcreateDate\"," +
+                "\"FieldName\":\"FmodifyDate\"," +
                 "\"Compare\":\">=\"," +
                 "\"Value\":\"" + dayStart + "T00:00:00.000\"," +
                 "\"Right\":\")\"," +
                 "\"Logic\":\"and\"}";
         String end = "{\"Left\":\"(\"," +
-                "\"FieldName\":\"FcreateDate\"," +
+                "\"FieldName\":\"FmodifyDate\"," +
                 "\"Compare\":\"<\"," +
                 "\"Value\":\"" + dayEnd + "T00:00:00.000\"," +
                 "\"Right\":\")\"," +
                 "\"Logic\":\"\"}";
 
-//        jArray.add(JSONObject.parse(start));
-//        jArray.add(JSONObject.parse(end));
 //        jArray.add(JSONObject.parse(filter));
-//        jsonData.put("FilterString", jArray);
-//        jsonData.put("StartRow", 0);
+//        jArray.add(JSONObject.parse(filter1));
+        jArray.add(JSONObject.parse(end));
+        jArray.add(JSONObject.parse(start));
+        jsonData.put("FilterString", jArray);
+        jsonData.put("StartRow", 0);
 
         while (true) {
             try {
                 List<List<Object>> lists = client.executeBillQuery(jsonData.toString());
-                System.out.println(lists.size());
                 for (int i = 0; i < lists.size(); i++) {
                     List<Object> row = lists.get(i);
                     JSONObject result = new JSONObject();
