@@ -176,14 +176,11 @@ public class StockDetails implements ExcelSheet {
             row.createCell(4).setCellValue(stockDetailResultSet.getString("product_line"));
             row.createCell(5).setCellValue(stockDetailResultSet.getString("product_series"));
             row.createCell(6).setCellValue(stockDetailResultSet.getString("ip_sub"));
-            if (saleDate != null
-                    && saleDate.before(StockConstant.MAX_DATE)
-                    && productSource != null
-                    && !(saleDate.after(StockConstant.HIDE_DATE) && matchFlag != 1 && productSource.equals("自主研发"))) {
-                SXSSFCell cell7 = row.createCell(7);
-                cell7.setCellStyle(dateCellStyle);
-                cell7.setCellValue(saleDate);
-            }
+
+            SXSSFCell cell7 = row.createCell(7);
+            cell7.setCellStyle(dateCellStyle);
+            cell7.setCellValue(saleDate);
+
             row.createCell(8).setCellValue(Util.mapStockAge(saleDate));
             row.createCell(9).setCellValue(stockDetailResultSet.getDouble("sale_price"));
             row.createCell(10).setCellValue(cost);

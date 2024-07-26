@@ -171,15 +171,12 @@ public class StockMaterialGroup implements ExcelSheet {
             row.createCell(5).setCellValue(resultSet.getString("product_series"));
             row.createCell(6).setCellValue(resultSet.getString("ip_sub"));
             row.createCell(7).setCellValue(resultSet.getDouble("sale_price"));
-            if (saleDate != null
-                    && saleDate.before(StockConstant.MAX_DATE)
-                    && productSource != null
-                    && !(saleDate.after(StockConstant.HIDE_DATE) && matchFlag != 1 && productSource.equals("自主研发"))) {
-                SXSSFCell cell7 = row.createCell(8);
-                cell7.setCellStyle(dateCellStyle);
-                cell7.setCellValue(saleDate);
-                row.createCell(9).setCellValue(Util.mapStockAge(saleDate));
-            }
+
+            SXSSFCell celld = row.createCell(8);
+            celld.setCellStyle(dateCellStyle);
+            celld.setCellValue(saleDate);
+            row.createCell(9).setCellValue(Util.mapStockAge(saleDate));
+
             row.createCell(10).setCellValue(cost);
             row.createCell(11).setCellValue(costWithTax);
 

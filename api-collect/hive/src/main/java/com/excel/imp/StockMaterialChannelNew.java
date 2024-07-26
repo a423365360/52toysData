@@ -134,14 +134,11 @@ public class StockMaterialChannelNew implements ExcelSheet {
 
             row.createCell(11).setCellValue(resultSet.getString("channel"));
             Date saleDate = resultSet.getDate("sale_date");
-            if (saleDate != null
-                    && saleDate.before(StockConstant.MAX_DATE)
-                    && productSource != null
-                    && !(saleDate.after(StockConstant.HIDE_DATE) && matchFlag != 1 && productSource.equals("自主研发"))) {
-                SXSSFCell cell7 = row.createCell(12);
-                cell7.setCellStyle(dateCellStyle);
-                cell7.setCellValue(saleDate);
-            }
+
+            SXSSFCell celld = row.createCell(12);
+            celld.setCellStyle(dateCellStyle);
+            celld.setCellValue(saleDate);
+
             row.createCell(13).setCellValue(Util.mapStockAge(saleDate));
             totalSale = resultSet.getInt("total_sale");
             totalSaleSplit = resultSet.getInt("total_sale_split");
