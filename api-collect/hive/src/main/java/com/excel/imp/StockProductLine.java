@@ -208,6 +208,12 @@ public class StockProductLine implements ExcelSheet {
                 row.createCell(27).setCellValue(Util.mapNumber(qtySplit / qtyMonthSplit * 30d));
                 row.createCell(29).setCellValue(Util.mapNumber(avbQtySplit / qtyMonthSplit * 30d));
             }
+
+            row.createCell(30).setCellValue(Util.stockStatus((int) qty, (int) qtyMonth, 30, now, now));
+            row.createCell(31).setCellValue(Util.stockStatus((int) avbQty, (int) qtyMonth, 30, now, now));
+            row.createCell(32).setCellValue(Util.stockStatus((int) qtySplit, (int) qtyMonthSplit, 30, now, now));
+            row.createCell(33).setCellValue(Util.stockStatus((int) avbQtySplit, (int) qtyMonthSplit, 30, now, now));
+
             SXSSFCell cell34 = row.createCell(34);
             cell34.setCellStyle(numberCellStyle);
             cell34.setCellValue(resultSet.getInt("total_instock"));
@@ -233,10 +239,10 @@ public class StockProductLine implements ExcelSheet {
             cell40.setCellStyle(numberCellStyle);
             cell40.setCellValue(resultSet.getInt("last_buy_split"));
 
-            SXSSFCell cell41 = row.createCell(39);
+            SXSSFCell cell41 = row.createCell(41);
             cell41.setCellStyle(numberCellStyle);
             cell41.setCellValue(resultSet.getInt("future"));
-            SXSSFCell cell42 = row.createCell(40);
+            SXSSFCell cell42 = row.createCell(42);
             cell42.setCellStyle(numberCellStyle);
             cell42.setCellValue(resultSet.getInt("future_split"));
             count3++;

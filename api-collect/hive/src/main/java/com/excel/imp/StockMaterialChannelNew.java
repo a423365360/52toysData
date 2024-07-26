@@ -252,7 +252,7 @@ public class StockMaterialChannelNew implements ExcelSheet {
                 row.createCell(40).setCellValue(Util.mapNumber(qtySplit / qtyMonthSplit * 30d));
                 row.createCell(42).setCellValue(Util.mapNumber(avbQtySplit / qtyMonthSplit * 30d));
             }
-            row.createCell(42).setCellValue(Util.stockStatus((int) qty, (int) qtyMonth, 30, saleDate, now));
+            row.createCell(43).setCellValue(Util.stockStatus((int) qty, (int) qtyMonth, 30, saleDate, now));
             row.createCell(44).setCellValue(Util.stockStatus((int) avbQty, (int) qtyMonth, 30, saleDate, now));
             row.createCell(45).setCellValue(Util.stockStatus((int) qtySplit, (int) qtyMonthSplit, 30, saleDate, now));
             row.createCell(46).setCellValue(Util.stockStatus((int) avbQtySplit, (int) qtyMonthSplit, 30, saleDate, now));

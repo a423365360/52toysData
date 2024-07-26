@@ -236,10 +236,10 @@ public class StockProductSource implements ExcelSheet {
             cell40.setCellStyle(numberCellStyle);
             cell40.setCellValue(resultSet.getInt("last_buy_split"));
 
-            SXSSFCell cell41 = row.createCell(39);
+            SXSSFCell cell41 = row.createCell(41);
             cell41.setCellStyle(numberCellStyle);
             cell41.setCellValue(resultSet.getInt("future"));
-            SXSSFCell cell42 = row.createCell(40);
+            SXSSFCell cell42 = row.createCell(42);
             cell42.setCellStyle(numberCellStyle);
             cell42.setCellValue(resultSet.getInt("future_split"));
 
