@@ -501,6 +501,11 @@ public class DataUtil {
         String stockDetailSql =
                 "SELECT * FROM ads_stock WHERE dt ='" + endDayInput + "'";
 
+        String stockMaterialChannelNewSql =
+                "SELECT * FROM ads_stock_compute_in_material_channel WHERE dt ='" + endDayInput + "'";
+        String stockMaterialChannelUseNewSql =
+                "SELECT * FROM ads_stock_compute_in_material_channel_use WHERE dt ='" + endDayInput + "'";
+
         if (sign == ReportType.STOCK_DETAIL) {
             // 仓库详情
             StockDetails stockDetails = new StockDetails(xssfWorkbook, hiveConnection);
@@ -509,10 +514,10 @@ public class DataUtil {
 
         if (sign == ReportType.STOCK_CAL) {
             // 产品系列
-            StockProductSeries stockProductSeries = new StockProductSeries(xssfWorkbook, hiveConnection);
-            stockProductSeries.setSheet("产品系列汇总", stockProductSeriesSql);
-            stockProductSeries.setSheet("产品系列汇总（混装）", stockProductSeriesHunSql);
-            stockProductSeries.setSheet("产品系列汇总（可用）", stockProductSeriesUseSql);
+//            StockProductSeries stockProductSeries = new StockProductSeries(xssfWorkbook, hiveConnection);
+//            stockProductSeries.setSheet("产品系列汇总", stockProductSeriesSql);  // TODO 省略
+//            stockProductSeries.setSheet("产品系列汇总（混装）", stockProductSeriesHunSql); // TODO 省略
+//            stockProductSeries.setSheet("产品系列汇总（可用）", stockProductSeriesUseSql); // TODO 省略
 
             // 产品系列渠道
             StockProductSeriesChannel stockProductSeriesChannel = new StockProductSeriesChannel(xssfWorkbook, hiveConnection);
@@ -535,8 +540,12 @@ public class DataUtil {
             stockProductIPSub.setSheet("IP细分", stockIPSubSql);
 
             // 物料渠道
-            StockMaterialChannel stockMaterialChannel = new StockMaterialChannel(xssfWorkbook, hiveConnection);
-            stockMaterialChannel.setSheet("物料渠道", stockMaterialChannelSql);
+//            StockMaterialChannel stockMaterialChannel = new StockMaterialChannel(xssfWorkbook, hiveConnection);
+//            stockMaterialChannel.setSheet("物料渠道", stockMaterialChannelSql);
+            StockMaterialChannelNew stockMaterialChannelNew = new StockMaterialChannelNew(xssfWorkbook, hiveConnection);
+            stockMaterialChannelNew.setSheet("物料渠道", stockMaterialChannelNewSql);
+//            stockMaterialChannelNew.setSheet("物料渠道(可用)", stockMaterialChannelUseNewSql);
+
 
             // 仓库分组
             StockMaterialGroup stockMaterialGroup = new StockMaterialGroup(xssfWorkbook, hiveConnection);

@@ -92,13 +92,13 @@ public class HiveToCsvMail {
             }
 
             // TODO TEST
-//            if ("0".equals(testFlag)) {
-//                mailConnection.close();
-//                hiveConnection.close();
-//                addrssSQL.close();
-//                reportConnection.close();
-//                return;
-//            }
+            if ("0".equals(testFlag)) {
+                mailConnection.close();
+                hiveConnection.close();
+                addrssSQL.close();
+                reportConnection.close();
+                return;
+            }
 
             // 发送附件
             for (String mailTo : addressSet) {

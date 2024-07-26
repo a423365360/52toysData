@@ -32,10 +32,10 @@ public class SingleKingDeeAPI {
         JSONArray jArray = new JSONArray();
         String dayStart = "2024-05-11";
         String dayEnd = "2024-05-12";
-        String filter = "{\"Left\":\"((\"," +
+        String filter = "{\"Left\":\"(\"," +
                 "\"FieldName\":\"FNumber\"," +
                 "\"Compare\":\"=\"," +
-                "\"Value\": \"LZ-JT068\"," +
+                "\"Value\": \"ZWSY0026\"," +
                 "\"Right\":\")\"," +
                 "\"Logic\":\"or\"}";
         String filter1 = "{\"Left\":\"(\"," +
@@ -57,10 +57,10 @@ public class SingleKingDeeAPI {
                 "\"Right\":\")\"," +
                 "\"Logic\":\"\"}";
 
-//        jArray.add(JSONObject.parse(filter));
+        jArray.add(JSONObject.parse(filter));
 //        jArray.add(JSONObject.parse(filter1));
-        jArray.add(JSONObject.parse(end));
-        jArray.add(JSONObject.parse(start));
+//        jArray.add(JSONObject.parse(end));
+//        jArray.add(JSONObject.parse(start));
         jsonData.put("FilterString", jArray);
         jsonData.put("StartRow", 0);
 

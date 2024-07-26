@@ -7,6 +7,7 @@ import com.util.Util;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -30,8 +31,10 @@ public class StockProductSeriesChannel implements ExcelSheet {
     public void setSheet(String table, String sql) throws Exception {
         Date now = DateTime.now().toSqlDate();
         CellStyle dateCellStyle = xssfWorkbook.createCellStyle();
+        CellStyle numberCellStyle = xssfWorkbook.createCellStyle();
         DataFormat dataFormat = xssfWorkbook.createDataFormat();
         dateCellStyle.setDataFormat(dataFormat.getFormat("yyyy/m/d"));
+        numberCellStyle.setDataFormat(dataFormat.getFormat("#,##0"));
 
         CellStyle percentStyle = xssfWorkbook.createCellStyle();
         percentStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
@@ -122,40 +125,94 @@ public class StockProductSeriesChannel implements ExcelSheet {
             row.createCell(6).setCellValue(Util.mapStockAge(saleDate));
             totalSale = resultSet.getInt("total_sale");
             totalSaleSplit = resultSet.getInt("total_sale_split");
+
             qty = resultSet.getDouble("qty");
-            row.createCell(7).setCellValue(qty);
+            SXSSFCell cell7 = row.createCell(7);
+            cell7.setCellStyle(numberCellStyle);
+            cell7.setCellValue(qty);
+
             avbQty = resultSet.getDouble("avb_qty");
-            row.createCell(8).setCellValue(avbQty);
+            SXSSFCell cell8 = row.createCell(8);
+            cell8.setCellStyle(numberCellStyle);
+            cell8.setCellValue(avbQty);
+
             qtySplit = resultSet.getDouble("qty_split");
-            row.createCell(9).setCellValue(qtySplit);
+            SXSSFCell cell9= row.createCell(9);
+            cell9.setCellStyle(numberCellStyle);
+            cell9.setCellValue(qtySplit);
+
             avbQtySplit = resultSet.getDouble("avb_qty_split");
-            row.createCell(10).setCellValue(avbQtySplit);
-            row.createCell(11).setCellValue(qty - avbQty);
-            row.createCell(12).setCellValue(qtySplit - avbQtySplit);
+            SXSSFCell cell10= row.createCell(10);
+            cell10.setCellStyle(numberCellStyle);
+            cell10.setCellValue(avbQtySplit);
+
+            SXSSFCell cell11= row.createCell(11);
+            cell11.setCellStyle(numberCellStyle);
+            cell11.setCellValue(qty - avbQty);
+            SXSSFCell cell12= row.createCell(12);
+            cell12.setCellStyle(numberCellStyle);
+            cell12.setCellValue(qtySplit - avbQtySplit);
+
             qtyQuarter = resultSet.getDouble("qty_quarter");
-            row.createCell(13).setCellValue(qtyQuarter);
+            SXSSFCell cell13= row.createCell(13);
+            cell13.setCellStyle(numberCellStyle);
+            cell13.setCellValue(qtyQuarter);
+
             qtyMonth = resultSet.getDouble("qty_month");
-            row.createCell(14).setCellValue(qtyMonth);
+            SXSSFCell cell14= row.createCell(14);
+            cell14.setCellStyle(numberCellStyle);
+            cell14.setCellValue(qtyMonth);
+
             qtyWeek4 = resultSet.getDouble("qty_week4");
-            row.createCell(15).setCellValue(qtyWeek4);
+            SXSSFCell cell15= row.createCell(15);
+            cell15.setCellStyle(numberCellStyle);
+            cell15.setCellValue(qtyWeek4);
+
             qtyWeek3 = resultSet.getDouble("qty_week3");
-            row.createCell(16).setCellValue(qtyWeek3);
+            SXSSFCell cell16= row.createCell(16);
+            cell16.setCellStyle(numberCellStyle);
+            cell16.setCellValue(qtyWeek3);
+
             qtyWeek2 = resultSet.getDouble("qty_week2");
-            row.createCell(17).setCellValue(qtyWeek2);
+            SXSSFCell cell17= row.createCell(17);
+            cell17.setCellStyle(numberCellStyle);
+            cell17.setCellValue(qtyWeek2);
+
             qtyWeek1 = resultSet.getDouble("qty_week1");
-            row.createCell(18).setCellValue(qtyWeek1);
+            SXSSFCell cell18= row.createCell(18);
+            cell18.setCellStyle(numberCellStyle);
+            cell18.setCellValue(qtyWeek1);
+
             qtyQuarterSplit = resultSet.getDouble("qty_quarter_split");
-            row.createCell(19).setCellValue(qtyQuarterSplit);
+            SXSSFCell cell19= row.createCell(19);
+            cell19.setCellStyle(numberCellStyle);
+            cell19.setCellValue(qtyQuarterSplit);
+
             qtyMonthSplit = resultSet.getDouble("qty_month_split");
-            row.createCell(20).setCellValue(qtyMonthSplit);
+            SXSSFCell cell20= row.createCell(20);
+            cell20.setCellStyle(numberCellStyle);
+            cell20.setCellValue(qtyMonthSplit);
+
             qtyWeekSplit4 = resultSet.getDouble("qty_week_split4");
-            row.createCell(21).setCellValue(qtyWeekSplit4);
+            SXSSFCell cell21= row.createCell(21);
+            cell21.setCellStyle(numberCellStyle);
+            cell21.setCellValue(qtyWeekSplit4);
+
             qtyWeekSplit3 = resultSet.getDouble("qty_week_split3");
-            row.createCell(22).setCellValue(qtyWeekSplit3);
+            SXSSFCell cell22= row.createCell(22);
+            cell22.setCellStyle(numberCellStyle);
+            cell22.setCellValue(qtyWeekSplit3);
+
             qtyWeekSplit2 = resultSet.getDouble("qty_week_split2");
-            row.createCell(23).setCellValue(qtyWeekSplit2);
+            SXSSFCell cell23= row.createCell(23);
+            cell23.setCellStyle(numberCellStyle);
+            cell23.setCellValue(qtyWeekSplit2);
+
             qtyWeekSplit1 = resultSet.getDouble("qty_week_split1");
-            row.createCell(24).setCellValue(qtyWeekSplit1);
+            SXSSFCell cell24= row.createCell(24);
+            cell24.setCellStyle(numberCellStyle);
+            cell24.setCellValue(qtyWeekSplit1);
+
             row.createCell(25).setCellValue(Util.mapNumber((qtyWeek1 + qtyWeek2) / 14d));
             row.createCell(26).setCellValue(Util.mapNumber((qtyWeekSplit1 + qtyWeekSplit2) / 14d));
             row.createCell(27).setCellValue(Util.trend((int) qtyWeek1, (int) qtyWeek2));
@@ -179,18 +236,44 @@ public class StockProductSeriesChannel implements ExcelSheet {
             row.createCell(37).setCellValue(Util.stockStatus((int) avbQty, (int) qtyMonth, 30, saleDate, now));
             row.createCell(38).setCellValue(Util.stockStatus((int) qtySplit, (int) qtyMonthSplit, 30, saleDate, now));
             row.createCell(39).setCellValue(Util.stockStatus((int) avbQtySplit, (int) qtyMonthSplit, 30, saleDate, now));
-            row.createCell(40).setCellValue(resultSet.getInt("total_instock"));
-            row.createCell(41).setCellValue(resultSet.getInt("total_instock_split"));
-            row.createCell(42).setCellValue(totalSale);
-            row.createCell(43).setCellValue(totalSaleSplit);
-            row.createCell(44).setCellValue(resultSet.getInt("buy_times"));
-            row.createCell(45).setCellValue(resultSet.getInt("last_buy"));
-            row.createCell(46).setCellValue(resultSet.getInt("last_buy_split"));
-            row.createCell(47).setCellValue(resultSet.getInt("future"));
-            row.createCell(48).setCellValue(resultSet.getInt("future_split"));
+
+            SXSSFCell cell40 = row.createCell(40);
+            cell40.setCellStyle(numberCellStyle);
+            cell40.setCellValue(resultSet.getInt("total_instock"));
+            SXSSFCell cell41 = row.createCell(41);
+            cell41.setCellStyle(numberCellStyle);
+            cell41.setCellValue(resultSet.getInt("total_instock_split"));
+
+            SXSSFCell cell42 = row.createCell(42);
+            cell42.setCellStyle(numberCellStyle);
+            cell42.setCellValue(totalSale);
+            SXSSFCell cell43 = row.createCell(43);
+            cell43.setCellStyle(numberCellStyle);
+            cell43.setCellValue(totalSaleSplit);
+
+            SXSSFCell cell44 = row.createCell(44);
+            cell44.setCellStyle(numberCellStyle);
+            cell44.setCellValue(resultSet.getInt("buy_times"));
+
+            SXSSFCell cell45 = row.createCell(45);
+            cell45.setCellStyle(numberCellStyle);
+            cell45.setCellValue(resultSet.getInt("last_buy"));
+            SXSSFCell cell46 = row.createCell(46);
+            cell46.setCellStyle(numberCellStyle);
+            cell46.setCellValue(resultSet.getInt("last_buy_split"));
+
+            SXSSFCell cell47 = row.createCell(47);
+            cell47.setCellStyle(numberCellStyle);
+            cell47.setCellValue(resultSet.getInt("future"));
+
+            SXSSFCell cell48 = row.createCell(48);
+            cell48.setCellStyle(numberCellStyle);
+            cell48.setCellValue(resultSet.getInt("future_split"));
 
             count5++;
         }
+        CellRangeAddress range = new CellRangeAddress(1, sheet.getLastRowNum(), 0, 48);
+        sheet.setAutoFilter(range);
         ps.close();
     }
 }
