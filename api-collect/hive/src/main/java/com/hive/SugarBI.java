@@ -4,9 +4,7 @@ import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import com.sun.mail.util.MailSSLSocketFactory;
 
-import javax.activation.DataHandler;
 import javax.mail.*;
-import javax.mail.search.FlagTerm;
 import javax.mail.search.SubjectTerm;
 import java.io.*;
 import java.util.Properties;
@@ -51,20 +49,21 @@ public class SugarBI {
             // 获取存储对象
             Store store = session.getStore("imap");
             store.connect(MAIL_HOST, MAIL_USERNAME, MAIL_PASSWORD);
+
+            // 获取收件箱
             Folder inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_WRITE);
 
-            // 搜索已读邮件
-            FlagTerm flagTerm = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
-            SubjectTerm subjectTerm = new SubjectTerm("sugar-" + doDate);
-
+            // 搜索邮件
+            SubjectTerm subjectTerm = new SubjectTerm("sugarbi-" + doDate);
             Message[] messages = inbox.search(subjectTerm);
 
+            // 处理邮件
             for (Message message : messages) {
-                // 处理邮件
                 processMessage(message);
             }
 
+            // 关闭资源
             inbox.close(false);
             store.close();
         } catch (MessagingException | IOException e) {
@@ -73,60 +72,32 @@ public class SugarBI {
     }
 
     public static void processMessage(Message message) throws Exception {
-        // 获取邮件的主题
-        String subject = message.getSubject();
 
         // 获取邮件的内容
         Object content = message.getContent();
-
         Multipart multipart = (Multipart) content;
+
         for (int i = 0; i < multipart.getCount(); i++) {
             BodyPart bodyPart = multipart.getBodyPart(i);
             if (bodyPart.getDisposition() != null && bodyPart.getDisposition().equalsIgnoreCase(Part.INLINE)) {
                 // 内嵌图片
                 InputStream inputStream = bodyPart.getInputStream();
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-                byte[] buffer = new byte[4096];
+                int bufferSize = 1024 * 512;
+                byte[] buffer = new byte[bufferSize];
                 int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+                try (FileOutputStream fileOutputStream = new FileOutputStream("d:\\test\\test.jpg");
+                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)) {
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        bufferedOutputStream.write(buffer, 0, bytesRead);
+                        bufferedOutputStream.flush();
+                    }
+                } catch (Exception e) {
+                    inputStream.close();
                 }
-                byte[] imageData = outputStream.toByteArray();
 
-                // 保存图片文件
-                FileOutputStream fileOutputStream = new FileOutputStream("d:\\test\\test.jpg");
-                fileOutputStream.write(imageData);
-                fileOutputStream.close();
+                inputStream.close();
             }
         }
-
-        System.out.println(subject);
-    }
-
-    public static void downloadImage(BodyPart bodyPart) throws Exception {
-        String fileName = generateFileName(bodyPart);
-        DataHandler dataHandler = bodyPart.getDataHandler();
-        InputStream in = dataHandler.getInputStream();
-
-        File file = new File(fileName);
-        FileOutputStream out = new FileOutputStream(file);
-
-        byte[] buffer = new byte[4096];
-        int len;
-        while ((len = in.read(buffer)) > 0) {
-            out.write(buffer, 0, len);
-        }
-
-        in.close();
-        out.close();
-    }
-
-    public static String generateFileName(BodyPart bodyPart) throws Exception {
-        String fileName = bodyPart.getFileName();
-        if (fileName == null) {
-            fileName = "image_" + System.currentTimeMillis() + ".jpg"; // 提供一个默认的文件名
-        }
-        return fileName;
     }
 }
