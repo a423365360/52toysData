@@ -1,15 +1,14 @@
 package com.hive;
 
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
 import com.sun.mail.util.MailSSLSocketFactory;
-import com.util.MailUtil;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.mail.search.SubjectTerm;
+import java.io.*;
 import java.util.Properties;
 
 
@@ -21,6 +20,12 @@ public class SugarBI {
         String MAIL_USERNAME = "daishanhong@52toys.com";
         String MAIL_PASSWORD = "eCSRrUsuuN7WyFAy";
         String MAIL_PROTOCOL = "imap";
+        String doDate = DateTime.now().offset(DateField.HOUR, -24).toDateStr();
+
+        try {
+            doDate = args[0];
+        } catch (Exception e) {
+        }
 
         // 创建邮件
         Properties properties = new Properties();
@@ -45,15 +50,15 @@ public class SugarBI {
         try {
             // 获取存储对象
             Store store = session.getStore("imap");
-            store.connect(MAIL_HOST,"daishanhong@52toys.com", "eCSRrUsuuN7WyFAy");
-
-            // 获取收件箱文件夹
+            store.connect(MAIL_HOST, MAIL_USERNAME, MAIL_PASSWORD);
             Folder inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_WRITE);
 
             // 搜索已读邮件
             FlagTerm flagTerm = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
-            Message[] messages = inbox.search(flagTerm);
+            SubjectTerm subjectTerm = new SubjectTerm("sugar-" + doDate);
+
+            Message[] messages = inbox.search(subjectTerm);
 
             for (Message message : messages) {
                 // 处理邮件
@@ -72,19 +77,29 @@ public class SugarBI {
         String subject = message.getSubject();
 
         // 获取邮件的内容
-//        Object content = message.getContent();
-//
-//        if (content instanceof Multipart) {
-//            Multipart multipart = (Multipart) content;
-//            for (int i = 0; i < multipart.getCount(); i++) {
-//                BodyPart bodyPart = multipart.getBodyPart(i);
-//
-//                if (Part.IMAGE.equalsIgnoreCase(bodyPart.getContentType())) {
-//                    // 下载图片
-//                    downloadImage(bodyPart);
-//                }
-//            }
-//        }
+        Object content = message.getContent();
+
+        Multipart multipart = (Multipart) content;
+        for (int i = 0; i < multipart.getCount(); i++) {
+            BodyPart bodyPart = multipart.getBodyPart(i);
+            if (bodyPart.getDisposition() != null && bodyPart.getDisposition().equalsIgnoreCase(Part.INLINE)) {
+                // 内嵌图片
+                InputStream inputStream = bodyPart.getInputStream();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                byte[] imageData = outputStream.toByteArray();
+
+                // 保存图片文件
+                FileOutputStream fileOutputStream = new FileOutputStream("d:\\test\\test.jpg");
+                fileOutputStream.write(imageData);
+                fileOutputStream.close();
+            }
+        }
 
         System.out.println(subject);
     }

@@ -12,13 +12,13 @@ import java.util.List;
 public class SingleKingDeeAPI {
     public static void main(String[] args) throws Exception {
         K3CloudApi client = new K3CloudApi();
-        String formId = "bd_stock";
+        String formId = "bos_assistantdata_detail";
 //        String formId = "sal_outstock";
         int limit = 500;
 
         String path = "D:\\meta\\" + formId + ".xls";
-//        String fields = FieldsUtil.xls(path);
-        String fields = "FNumber,FModifyDate,FCreateDate";
+        String fields = FieldsUtil.xls(path);
+//        String fields = "FNumber,FModifyDate,FCreateDate";
         String[] fieldList = fields.split(",");
         HashMap<String, String> map = FieldsUtil.xlsMap(path);
 
@@ -33,9 +33,9 @@ public class SingleKingDeeAPI {
         String dayStart = "2024-05-11";
         String dayEnd = "2024-05-12";
         String filter = "{\"Left\":\"(\"," +
-                "\"FieldName\":\"FNumber\"," +
+                "\"FieldName\":\"FDataValue\"," +
                 "\"Compare\":\"=\"," +
-                "\"Value\": \"ZWSY0026\"," +
+                "\"Value\": \"鹊拾乐系列\"," +
                 "\"Right\":\")\"," +
                 "\"Logic\":\"or\"}";
         String filter1 = "{\"Left\":\"(\"," +
