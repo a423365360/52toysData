@@ -5,7 +5,7 @@ import cn.hutool.core.date.DateTime;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;
-import javax.mail.search.SubjectTerm;
+import javax.mail.search.FlagTerm;
 import java.io.*;
 import java.util.Properties;
 
@@ -55,12 +55,20 @@ public class SugarBI {
             inbox.open(Folder.READ_WRITE);
 
             // 搜索邮件
-            SubjectTerm subjectTerm = new SubjectTerm("sugarbi-" + doDate);
-            Message[] messages = inbox.search(subjectTerm);
+            String subjectTarget = "sugarbi-" + doDate;
+
+            FlagTerm flagTerm = new FlagTerm(new Flags(Flags.Flag.SEEN), true);
+//            Message[] messages = inbox.search(flagTerm);
+            Message[] messages = inbox.getMessages();
+
+            System.out.println("搜索邮件数量: " + messages.length);
 
             // 处理邮件
             for (Message message : messages) {
-                processMessage(message);
+                String subject = message.getSubject();
+                if (subjectTarget.equals(subject)) {
+                    processMessage(message);
+                }
             }
 
             // 关闭资源
@@ -72,22 +80,24 @@ public class SugarBI {
     }
 
     public static void processMessage(Message message) throws Exception {
+        String downloadPath = "d:\\test\\test.jpg";
 
         // 获取邮件的内容
         Object content = message.getContent();
         Multipart multipart = (Multipart) content;
 
         for (int i = 0; i < multipart.getCount(); i++) {
+
             BodyPart bodyPart = multipart.getBodyPart(i);
+
             if (bodyPart.getDisposition() != null && bodyPart.getDisposition().equalsIgnoreCase(Part.INLINE)) {
                 // 内嵌图片
                 InputStream inputStream = bodyPart.getInputStream();
 
-                int bufferSize = 1024 * 512;
+                int bufferSize = 4096;
                 byte[] buffer = new byte[bufferSize];
                 int bytesRead;
-                try (FileOutputStream fileOutputStream = new FileOutputStream("d:\\test\\test.jpg");
-                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)) {
+                try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(downloadPath))) {
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         bufferedOutputStream.write(buffer, 0, bytesRead);
                         bufferedOutputStream.flush();
