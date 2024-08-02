@@ -75,11 +75,12 @@ public class HiveToCsvMail {
 
                     break;
                 case "stock1":
-                    // 即时库存
+                    // 即时库存详情
                     files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK_DETAIL));
                     break;
 
                 case "stock2":
+                    // 即时库存聚合统计
                     files.add(DataUtil.getStock(hiveConnection, endDay, testFlag, ReportType.STOCK_CAL));
                     break;
 

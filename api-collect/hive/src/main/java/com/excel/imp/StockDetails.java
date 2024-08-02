@@ -65,49 +65,53 @@ public class StockDetails implements ExcelSheet {
         rowField.createCell(23).setCellValue("近90天销量");
         rowField.createCell(24).setCellValue("近60天销量");
         rowField.createCell(25).setCellValue("近30天销量");
-        rowField.createCell(26).setCellValue("第-4周销量");
-        rowField.createCell(27).setCellValue("第-3周销量");
-        rowField.createCell(28).setCellValue("第-2周销量");
-        rowField.createCell(29).setCellValue("第-1周销量");
-        rowField.createCell(30).setCellValue("近90天销量（拆中盒）");
-        rowField.createCell(31).setCellValue("近60天销量（拆中盒）");
-        rowField.createCell(32).setCellValue("近30天销量（拆中盒）");
-        rowField.createCell(33).setCellValue("第-4周销量（拆中盒）");
-        rowField.createCell(34).setCellValue("第-3周销量（拆中盒）");
-        rowField.createCell(35).setCellValue("第-2周销量（拆中盒）");
-        rowField.createCell(36).setCellValue("第-1周销量（拆中盒）");
-        rowField.createCell(37).setCellValue("近14天平均销量");
-        rowField.createCell(38).setCellValue("近14天平均销量（拆中盒）");
-        rowField.createCell(39).setCellValue("近2周销售趋势");
-        rowField.createCell(40).setCellValue("全部库存周转（近90天销量）");
-        rowField.createCell(41).setCellValue("全部库存周转（近30天销量）");
-        rowField.createCell(42).setCellValue("可用库存周转（近90天销量）");
-        rowField.createCell(43).setCellValue("可用库存周转（近30天销量）");
-        rowField.createCell(44).setCellValue("全部库存预警（近30天销量）");
-        rowField.createCell(45).setCellValue("可用库存预警（近30天销量）");
-        rowField.createCell(46).setCellValue("累计进货");
-        rowField.createCell(47).setCellValue("累计进货（拆中盒）");
-        rowField.createCell(48).setCellValue("近7天进货（拆中盒）");
-        rowField.createCell(49).setCellValue("累计销售");
-        rowField.createCell(50).setCellValue("累计销售（拆中盒）");
-        rowField.createCell(51).setCellValue("采购次数");
-        rowField.createCell(52).setCellValue("最后一次采购量");
-        rowField.createCell(53).setCellValue("最后一次采购量（拆中盒）");
-        rowField.createCell(54).setCellValue("最后一次采购时间");
-        rowField.createCell(55).setCellValue("未到货");
-        rowField.createCell(56).setCellValue("未到货（拆中盒）");
-        rowField.createCell(57).setCellValue("是否包含[赠品]");
-        rowField.createCell(58).setCellValue("近30天销售额");
-        rowField.createCell(59).setCellValue("近60天销售额");
-        rowField.createCell(60).setCellValue("近90天销售额");
-        rowField.createCell(61).setCellValue("累计销售额");
-        rowField.createCell(62).setCellValue("规格");
+        rowField.createCell(26).setCellValue("第-6周销量");
+        rowField.createCell(27).setCellValue("第-5周销量");
+        rowField.createCell(28).setCellValue("第-4周销量");
+        rowField.createCell(29).setCellValue("第-3周销量");
+        rowField.createCell(30).setCellValue("第-2周销量");
+        rowField.createCell(31).setCellValue("第-1周销量");
+        rowField.createCell(32).setCellValue("近90天销量（拆中盒）");
+        rowField.createCell(33).setCellValue("近60天销量（拆中盒）");
+        rowField.createCell(34).setCellValue("近30天销量（拆中盒）");
+        rowField.createCell(35).setCellValue("第-6周销量（拆中盒）");
+        rowField.createCell(36).setCellValue("第-5周销量（拆中盒）");
+        rowField.createCell(37).setCellValue("第-4周销量（拆中盒）");
+        rowField.createCell(38).setCellValue("第-3周销量（拆中盒）");
+        rowField.createCell(39).setCellValue("第-2周销量（拆中盒）");
+        rowField.createCell(40).setCellValue("第-1周销量（拆中盒）");
+        rowField.createCell(41).setCellValue("近14天平均销量");
+        rowField.createCell(42).setCellValue("近14天平均销量（拆中盒）");
+        rowField.createCell(43).setCellValue("近2周销售趋势");
+        rowField.createCell(44).setCellValue("全部库存周转（近90天销量）");
+        rowField.createCell(45).setCellValue("全部库存周转（近30天销量）");
+        rowField.createCell(46).setCellValue("可用库存周转（近90天销量）");
+        rowField.createCell(47).setCellValue("可用库存周转（近30天销量）");
+        rowField.createCell(48).setCellValue("全部库存预警（近30天销量）");
+        rowField.createCell(49).setCellValue("可用库存预警（近30天销量）");
+        rowField.createCell(50).setCellValue("累计进货");
+        rowField.createCell(51).setCellValue("累计进货（拆中盒）");
+        rowField.createCell(52).setCellValue("近7天进货（拆中盒）");
+        rowField.createCell(53).setCellValue("累计销售");
+        rowField.createCell(54).setCellValue("累计销售（拆中盒）");
+        rowField.createCell(55).setCellValue("采购次数");
+        rowField.createCell(56).setCellValue("最后一次采购量");
+        rowField.createCell(57).setCellValue("最后一次采购量（拆中盒）");
+        rowField.createCell(58).setCellValue("最后一次采购时间");
+        rowField.createCell(59).setCellValue("未到货");
+        rowField.createCell(60).setCellValue("未到货（拆中盒）");
+        rowField.createCell(61).setCellValue("是否包含[赠品]");
+        rowField.createCell(62).setCellValue("近30天销售额");
+        rowField.createCell(63).setCellValue("近60天销售额");
+        rowField.createCell(64).setCellValue("近90天销售额");
+        rowField.createCell(65).setCellValue("累计销售额");
+        rowField.createCell(66).setCellValue("规格");
 
         Date now = DateTime.now().toSqlDate();
 
         int middleBoxFlag, modelPack, qty, avbQty, qtySplit, avbQtySplit, matchFlag;
-        int qtyQuarter, qtyMonth, qty2Month, qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future, instock7;
-        int qtyQuarterSplit, qtyMonthSplit, qty2MonthSplit, qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit, instockSplit7;
+        int qtyQuarter, qtyMonth, qty2Month, qtyWeek6,qtyWeek5,qtyWeek4, qtyWeek3, qtyWeek2, qtyWeek1, totalSale, totalInstock, lastBuy, future, instock7;
+        int qtyQuarterSplit, qtyMonthSplit, qty2MonthSplit, qtyWeekSplit6,qtyWeekSplit5,qtyWeekSplit4, qtyWeekSplit3, qtyWeekSplit2, qtyWeekSplit1, totalSaleSplit, totalInstockSplit, lastBuySplit, futureSplit, instockSplit7;
         double cost, costWithTax;
         String productSource, materialName;
 
@@ -126,6 +130,8 @@ public class StockDetails implements ExcelSheet {
             qtyQuarter = stockDetailResultSet.getInt("qty_quarter");
             qtyMonth = stockDetailResultSet.getInt("qty_month");
             qty2Month = stockDetailResultSet.getInt("qty_2month");
+            qtyWeek6 = stockDetailResultSet.getInt("qty_week6");
+            qtyWeek5 = stockDetailResultSet.getInt("qty_week5");
             qtyWeek4 = stockDetailResultSet.getInt("qty_week4");
             qtyWeek3 = stockDetailResultSet.getInt("qty_week3");
             qtyWeek2 = stockDetailResultSet.getInt("qty_week2");
@@ -145,6 +151,8 @@ public class StockDetails implements ExcelSheet {
             qtyWeekSplit2 = qtyWeek2;
             qtyWeekSplit3 = qtyWeek3;
             qtyWeekSplit4 = qtyWeek4;
+            qtyWeekSplit5 = qtyWeek5;
+            qtyWeekSplit6 = qtyWeek6;
             totalSaleSplit = totalSale;
             totalInstockSplit = totalInstock;
             lastBuySplit = lastBuy;
@@ -161,6 +169,8 @@ public class StockDetails implements ExcelSheet {
                 qtyWeekSplit2 *= modelPack;
                 qtyWeekSplit3 *= modelPack;
                 qtyWeekSplit4 *= modelPack;
+                qtyWeekSplit5 *= modelPack;
+                qtyWeekSplit6 *= modelPack;
                 totalSaleSplit *= modelPack;
                 totalInstockSplit *= modelPack;
                 lastBuySplit *= modelPack;
@@ -229,124 +239,140 @@ public class StockDetails implements ExcelSheet {
 
             SXSSFCell cell26 = row.createCell(26);
             cell26.setCellStyle(numberCellStyle);
-            cell26.setCellValue(qtyWeek4);
+            cell26.setCellValue(qtyWeek6);
 
             SXSSFCell cell27 = row.createCell(27);
             cell27.setCellStyle(numberCellStyle);
-            cell27.setCellValue(qtyWeek3);
+            cell27.setCellValue(qtyWeek5);
 
             SXSSFCell cell28 = row.createCell(28);
             cell28.setCellStyle(numberCellStyle);
-            cell28.setCellValue(qtyWeek2);
+            cell28.setCellValue(qtyWeek4);
 
             SXSSFCell cell29 = row.createCell(29);
             cell29.setCellStyle(numberCellStyle);
-            cell29.setCellValue(qtyWeek1);
+            cell29.setCellValue(qtyWeek3);
 
             SXSSFCell cell30 = row.createCell(30);
             cell30.setCellStyle(numberCellStyle);
-            cell30.setCellValue(qtyQuarterSplit);
+            cell30.setCellValue(qtyWeek2);
 
             SXSSFCell cell31 = row.createCell(31);
             cell31.setCellStyle(numberCellStyle);
-            cell31.setCellValue(qty2MonthSplit);
+            cell31.setCellValue(qtyWeek1);
 
             SXSSFCell cell32 = row.createCell(32);
             cell32.setCellStyle(numberCellStyle);
-            cell32.setCellValue(qtyMonthSplit);
+            cell32.setCellValue(qtyQuarterSplit);
 
             SXSSFCell cell33 = row.createCell(33);
             cell33.setCellStyle(numberCellStyle);
-            cell33.setCellValue(qtyWeekSplit4);
+            cell33.setCellValue(qty2MonthSplit);
 
             SXSSFCell cell34 = row.createCell(34);
             cell34.setCellStyle(numberCellStyle);
-            cell34.setCellValue(qtyWeekSplit3);
+            cell34.setCellValue(qtyMonthSplit);
 
             SXSSFCell cell35 = row.createCell(35);
             cell35.setCellStyle(numberCellStyle);
-            cell35.setCellValue(qtyWeekSplit2);
+            cell35.setCellValue(qtyWeekSplit6);
 
             SXSSFCell cell36 = row.createCell(36);
             cell36.setCellStyle(numberCellStyle);
-            cell36.setCellValue(qtyWeekSplit1);
+            cell36.setCellValue(qtyWeekSplit5);
 
-            row.createCell(37).setCellValue(Util.mapNumber(((double) qtyWeek1 + (double) qtyWeek2) / 14d));
-            row.createCell(38).setCellValue(Util.mapNumber(((double) qtyWeekSplit1 + (double) qtyWeekSplit2) / 14d));
-            row.createCell(39).setCellValue(Util.trend(qtyWeek1, qtyWeek2));
+            SXSSFCell cell37 = row.createCell(37);
+            cell37.setCellStyle(numberCellStyle);
+            cell37.setCellValue(qtyWeekSplit4);
+
+            SXSSFCell cell38 = row.createCell(38);
+            cell38.setCellStyle(numberCellStyle);
+            cell38.setCellValue(qtyWeekSplit3);
+
+            SXSSFCell cell39= row.createCell(39);
+            cell39.setCellStyle(numberCellStyle);
+            cell39.setCellValue(qtyWeekSplit2);
+
+            SXSSFCell cell40 = row.createCell(40);
+            cell40.setCellStyle(numberCellStyle);
+            cell40.setCellValue(qtyWeekSplit1);
+
+            row.createCell(41).setCellValue(Util.mapNumber(((double) qtyWeek1 + (double) qtyWeek2) / 14d));
+            row.createCell(42).setCellValue(Util.mapNumber(((double) qtyWeekSplit1 + (double) qtyWeekSplit2) / 14d));
+            row.createCell(43).setCellValue(Util.trend(qtyWeek1, qtyWeek2));
             if (qtyQuarter != 0) {
-                row.createCell(40).setCellValue(Util.mapNumber(((double) qty) / ((double) qtyQuarter) * 90d));
-                row.createCell(42).setCellValue(Util.mapNumber(((double) avbQty) / ((double) qtyQuarter) * 90d));
+                row.createCell(44).setCellValue(Util.mapNumber(((double) qty) / ((double) qtyQuarter) * 90d));
+                row.createCell(46).setCellValue(Util.mapNumber(((double) avbQty) / ((double) qtyQuarter) * 90d));
             }
             if (qtyMonth != 0) {
-                row.createCell(41).setCellValue(Util.mapNumber(((double) qty) / ((double) qtyMonth) * 30d));
-                row.createCell(43).setCellValue(Util.mapNumber(((double) avbQty) / ((double) qtyMonth) * 30d));
+                row.createCell(45).setCellValue(Util.mapNumber(((double) qty) / ((double) qtyMonth) * 30d));
+                row.createCell(47).setCellValue(Util.mapNumber(((double) avbQty) / ((double) qtyMonth) * 30d));
             }
-            row.createCell(44).setCellValue(Util.stockStatus(qty, qtyMonth, 30, saleDate, now));
-            row.createCell(45).setCellValue(Util.stockStatus(avbQty, qtyMonth, 30, saleDate, now));
+            row.createCell(48).setCellValue(Util.stockStatus(qty, qtyMonth, 30, saleDate, now));
+            row.createCell(49).setCellValue(Util.stockStatus(avbQty, qtyMonth, 30, saleDate, now));
 
-            SXSSFCell cellTotalInstock = row.createCell(46);
+            SXSSFCell cellTotalInstock = row.createCell(50);
             cellTotalInstock.setCellStyle(numberCellStyle);
             cellTotalInstock.setCellValue(totalInstock);
-            SXSSFCell cellTotalInstockSplit = row.createCell(47);
+            SXSSFCell cellTotalInstockSplit = row.createCell(51);
             cellTotalInstockSplit.setCellStyle(numberCellStyle);
             cellTotalInstockSplit.setCellValue(totalInstockSplit);
 
-            SXSSFCell cellInstockSplit7 = row.createCell(48);
+            SXSSFCell cellInstockSplit7 = row.createCell(52);
             cellInstockSplit7.setCellStyle(numberCellStyle);
             cellInstockSplit7.setCellValue(instockSplit7);
 
-            SXSSFCell cellTotalSale = row.createCell(49);
+            SXSSFCell cellTotalSale = row.createCell(53);
             cellTotalSale.setCellStyle(numberCellStyle);
             cellTotalSale.setCellValue(totalSale);
-            SXSSFCell cellTotalSaleSplit = row.createCell(50);
+            SXSSFCell cellTotalSaleSplit = row.createCell(54);
             cellTotalSaleSplit.setCellStyle(numberCellStyle);
             cellTotalSaleSplit.setCellValue(totalSaleSplit);
 
-            SXSSFCell cellBuyTimes = row.createCell(51);
+            SXSSFCell cellBuyTimes = row.createCell(55);
             cellBuyTimes.setCellStyle(numberCellStyle);
             cellBuyTimes.setCellValue(stockDetailResultSet.getInt("buy_times"));
 
-            SXSSFCell cellLastBuy = row.createCell(52);
+            SXSSFCell cellLastBuy = row.createCell(56);
             cellLastBuy.setCellStyle(numberCellStyle);
             cellLastBuy.setCellValue(lastBuy);
-            SXSSFCell cellLastBuySplit = row.createCell(53);
+            SXSSFCell cellLastBuySplit = row.createCell(57);
             cellLastBuySplit.setCellStyle(numberCellStyle);
             cellLastBuySplit.setCellValue(lastBuySplit);
 
             if (lastBuyTime != null) {
-                SXSSFCell cell = row.createCell(54);
+                SXSSFCell cell = row.createCell(58);
                 cell.setCellStyle(dateCellStyle);
                 cell.setCellValue(lastBuyTime);
             }
 
-            SXSSFCell cellFuture = row.createCell(55);
+            SXSSFCell cellFuture = row.createCell(59);
             cellFuture.setCellStyle(numberCellStyle);
             cellFuture.setCellValue(future);
-            SXSSFCell cellFutureSplit = row.createCell(56);
+            SXSSFCell cellFutureSplit = row.createCell(60);
             cellFutureSplit.setCellStyle(numberCellStyle);
             cellFutureSplit.setCellValue(futureSplit);
 
-            row.createCell(57).setCellValue(materialName.contains("赠品"));
+            row.createCell(61).setCellValue(materialName.contains("赠品"));
 
-            SXSSFCell cell58 = row.createCell(58);
+            SXSSFCell cell58 = row.createCell(62);
             cell58.setCellStyle(numberCellStyle);
             cell58.setCellValue(stockDetailResultSet.getDouble("sale30"));
-            SXSSFCell cell59 = row.createCell(59);
+            SXSSFCell cell59 = row.createCell(63);
             cell59.setCellStyle(numberCellStyle);
             cell59.setCellValue(stockDetailResultSet.getDouble("sale60"));
-            SXSSFCell cell60 = row.createCell(60);
+            SXSSFCell cell60 = row.createCell(64);
             cell60.setCellStyle(numberCellStyle);
             cell60.setCellValue(stockDetailResultSet.getDouble("sale90"));
-            SXSSFCell cell61 = row.createCell(61);
+            SXSSFCell cell61 = row.createCell(65);
             cell61.setCellStyle(numberCellStyle);
             cell61.setCellValue(stockDetailResultSet.getDouble("sale_amount"));
 
-            row.createCell(62).setCellValue(stockDetailResultSet.getString("specification"));
+            row.createCell(66).setCellValue(stockDetailResultSet.getString("specification"));
 
             count++;
         }
-        CellRangeAddress range = new CellRangeAddress(1, sheet.getLastRowNum(), 0, 62);
+        CellRangeAddress range = new CellRangeAddress(1, sheet.getLastRowNum(), 0, 66);
         sheet.setAutoFilter(range);
         ps.close();
     }
