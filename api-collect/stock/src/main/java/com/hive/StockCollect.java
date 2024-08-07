@@ -17,7 +17,7 @@ public class StockCollect {
     private static String auh = "https://52toys.ik3cloud.com/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.LoginByAppSecret.common.kdsvc";
     private static String orgs = "10000,10001,10002,10003,10004,10005,10006," +
             "20001,20002,20003,20004,20005,20006,20007,20008,20009,20010,20011,20012,20013,20014,20015,20016,20017,20018," +
-            "30000,30001,50002";
+            "30000,30001,50001,50002";
     private static int pageRows = 10000;
 
     public static void main(String[] args) throws Exception {
