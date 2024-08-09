@@ -81,6 +81,7 @@ public class HiveToCsvMail {
                 System.out.println("发送成功");
             } catch (Exception e) {
                 System.out.println("发送失败");
+                System.out.println(e.getMessage());
             }
 
         } catch (Exception e) {
