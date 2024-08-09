@@ -10,11 +10,7 @@ import com.util.MailUtil;
 import javax.mail.Session;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashSet;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class HiveToCsvMail {
@@ -22,6 +18,7 @@ public class HiveToCsvMail {
     private static final String MAIL_DATABASE = "mail";
     private static final String REPORT_DATABASE = "product";
     private static final String EMAIL_ADDRESS_QUERY_SQL = "SELECT address FROM mail.email_address WHERE is_effective = 1";
+    private static final String RECEIVER = "daishanhong@52toys.com";
 
     public static void main(String[] args) throws Exception {
         String testFlag = args[0];
@@ -36,20 +33,21 @@ public class HiveToCsvMail {
             endDay = dt;
         }
 
-        try (Connection mailConnection = ConnectUtil.getMySQLConnection(MAIL_DATABASE, testFlag);
-             Connection reportConnection = ConnectUtil.getMySQLConnection(REPORT_DATABASE, testFlag);
-             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag);
-             PreparedStatement addrssSQL = mailConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)) {
+        try (Connection reportConnection = ConnectUtil.getMySQLConnection(REPORT_DATABASE, testFlag);
+             Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag)
+//             Connection mailConnection = ConnectUtil.getMySQLConnection(MAIL_DATABASE, testFlag)
+//             PreparedStatement addrssSQL = mailConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)
+        ) {
 
             // 邮箱地址
-            ResultSet addrssResultSet = addrssSQL.executeQuery();
-            HashSet<String> addressSet = new HashSet<>();
-            while (addrssResultSet.next()) {
-                addressSet.add(addrssResultSet.getString(1));
-            }
+//            ResultSet addrssResultSet = addrssSQL.executeQuery();
+//            HashSet<String> addressSet = new HashSet<>();
+//            while (addrssResultSet.next()) {
+//                addressSet.add(addrssResultSet.getString(1));
+//            }
 
             // 获取结果
-            HashSet files = new HashSet<ReportBean>();
+            HashSet<ReportBean> files = new HashSet<ReportBean>();
 
             switch (mailFlag) {
                 case "report":
@@ -85,30 +83,18 @@ public class HiveToCsvMail {
                     break;
 
                 default:
-                    mailConnection.close();
-                    hiveConnection.close();
-                    addrssSQL.close();
-                    reportConnection.close();
                     return;
             }
 
-            // TODO TEST
-            if ("0".equals(testFlag)) {
-                mailConnection.close();
-                hiveConnection.close();
-                addrssSQL.close();
-                reportConnection.close();
-                return;
+            // 发送附件
+            try {
+                Session session = MailUtil.getSession();
+                MailUtil.sendMail(session, RECEIVER, files, mailFlag);
+                System.out.println("发送成功");
+            } catch (Exception e) {
+                System.out.println("发送失败");
             }
 
-            // 发送附件
-            for (String mailTo : addressSet) {
-                try {
-                    Session session = MailUtil.getSession();
-                    MailUtil.sendMail(session, mailTo, files, mailFlag);
-                } catch (Exception e) {
-                }
-            }
 
 //            // TODO 并发报表
 //            ExecutorService pool = Executors.newFixedThreadPool(3);
