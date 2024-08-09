@@ -26,7 +26,7 @@ public class MailUtil {
     private static final String MAIL_USERNAME = "daishanhong@52toys.com";
     private static final String MAIL_PASSWORD = "eCSRrUsuuN7WyFAy";
     private static final String MAIL_PROTOCOL = "smtp";
-    private static final int CHUNK_SIZE = 1024 * 1024; // 1 MB chunk size
+    private static final int CHUNK_SIZE = 1024; // 1 MB chunk size
 
     public static void sendMail(Session session, String mailTo, HashSet<ReportBean> files, String mailFlag) throws MessagingException, UnsupportedEncodingException {
         if (mailFlag == null || "".equals(mailFlag)) {
@@ -34,19 +34,18 @@ public class MailUtil {
         }
 
         String mailName;
+        String yesterdayCN = DateUtil.format(DateTime.now().offset(DateField.HOUR, -24), "yyyy年M月d日");
+        String todayCN = DateUtil.format(DateTime.now(), "yyyy年M月d日");
 
         switch (mailFlag) {
             case "report":
-                mailName = "商品数据";
-                break;
-            case "stock":
-                mailName = "库存数据";
+                mailName = yesterdayCN + "商品数据";
                 break;
             case "stock1":
-                mailName = "库存数据（详情明细）";
+                mailName = todayCN + "库存数据（详情明细）";
                 break;
             case "stock2":
-                mailName = "库存数据（聚合统计）";
+                mailName = todayCN + "库存数据（聚合统计）";
                 break;
             default:
                 return;
@@ -54,8 +53,7 @@ public class MailUtil {
 
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(MAIL_USERNAME));
-        message.setSubject(MimeUtility.encodeText(
-                DateUtil.format(DateTime.now().offset(DateField.HOUR, -24), "yyyy年M月d日") + mailName, "UTF-8", "B"));
+        message.setSubject(MimeUtility.encodeText(mailName, "UTF-8", "B"));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
 
         MimeMultipart multipart = new MimeMultipart();
