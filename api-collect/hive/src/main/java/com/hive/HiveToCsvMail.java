@@ -9,15 +9,12 @@ import com.util.MailUtil;
 
 import javax.mail.Session;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.HashSet;
 
 
 public class HiveToCsvMail {
     private static final String DATABASE = "kingdee";
-    private static final String MAIL_DATABASE = "mail";
     private static final String REPORT_DATABASE = "product";
-    private static final String EMAIL_ADDRESS_QUERY_SQL = "SELECT address FROM mail.email_address WHERE is_effective = 1";
     private static final String RECEIVER = "daishanhong@52toys.com";
 
     public static void main(String[] args) throws Exception {
@@ -35,16 +32,7 @@ public class HiveToCsvMail {
 
         try (Connection reportConnection = ConnectUtil.getMySQLConnection(REPORT_DATABASE, testFlag);
              Connection hiveConnection = ConnectUtil.getHiveConnection(DATABASE, testFlag)
-//             Connection mailConnection = ConnectUtil.getMySQLConnection(MAIL_DATABASE, testFlag)
-//             PreparedStatement addrssSQL = mailConnection.prepareStatement(EMAIL_ADDRESS_QUERY_SQL)
         ) {
-
-            // 邮箱地址
-//            ResultSet addrssResultSet = addrssSQL.executeQuery();
-//            HashSet<String> addressSet = new HashSet<>();
-//            while (addrssResultSet.next()) {
-//                addressSet.add(addrssResultSet.getString(1));
-//            }
 
             // 获取结果
             HashSet<ReportBean> files = new HashSet<ReportBean>();
@@ -95,37 +83,8 @@ public class HiveToCsvMail {
                 System.out.println("发送失败");
             }
 
-
-//            // TODO 并发报表
-//            ExecutorService pool = Executors.newFixedThreadPool(3);
-//            CountDownLatch latch = new CountDownLatch(addressSet.size());
-//            for (String mailTo : addressSet) {
-//                pool.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            Session session = MailUtil.getSession();
-//                            MailUtil.sendMail(session, mailTo, files, mailFlag);
-//                            latch.countDown(); // Decrement the latch counter once the email is sent
-//                        } catch (Exception e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
-//                });
-//            }
-//
-//            // Wait for all email sending tasks to complete before terminating the main thread
-//            try {
-//                latch.await(); // Block the main thread until the latch count reaches zero
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } finally {
-//                pool.shutdown(); // Gracefully shut down the thread pool
-//            }
-//
-//            System.out.println("Main thread exiting");
-
         } catch (Exception e) {
+            System.out.println("error");
         }
     }
 }
